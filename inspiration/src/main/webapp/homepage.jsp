@@ -22,7 +22,8 @@
             <a style="padding-left:10px" href="#">Site Rules</a>
             <div class="userButtons">
               <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" style=" margin-bottom: 20px;" type="button" data-toggle="dropdown">Username
+                <button class="btn btn-primary dropdown-toggle" style=" margin-bottom: 20px;"
+                        type="button" data-toggle="dropdown">Username
                 <span class="caret"></span></button>
                 <ul class="dropdown-menu">
                     <li><a href="viewProfile.jsp">View/Edit Profile</a></li>
