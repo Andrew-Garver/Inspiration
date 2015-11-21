@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type='text/javascript' src='https://api.stackexchange.com/js/2.0/all.js'>
+        </script>
+    </head>
+    <body>
+    <script type ="text/javascript">
+        SE.init({   
+        clientId: 6001,
+        key: 'lnpme2NK1qwxj8gtXIRa0A((',
+        channelUrl: 'http://localhost:8080/web2/blank.html',
+        complete: function (data) {
+            document.getElementById("SignUp").disabled = false;
+    }
+    });
+    </script>
+    <script type ="text/javascript">
+        function fillForm(data) {
+            alert('age of ' + data.networkUsers[0].age);
+            alert('name of ' + data.networkUsers[0].name);
+            alert('description [may be blank]: ' + data.networkUsers[0].about_me);
+            alert('profile pic @ ' + data.networkUsers[0].profile_image);
+            alert('location @ ' + data.networkUsers[0].location);
+
+            document.getElementById("name").value = data.networkUsers[0].name;
+            document.getElementById("location").value = data.networkUsers[0].location;
+            document.getElementById("url").value = data.networkUsers[0].profile_image;
+            document.getElementById("description").value = data.networkUsers[0].about_me;            
+            document.getElementById("age").value = data.networkUsers[0].age;            
+        }
+        function errorAuth() {
+            alert("Problem with logging into stack exchange");
+        }
+        function getStackData() {
+            SE.authenticate({
+                success: function(data) {
+                    
+                    alert('age of ' + data.networkUsers[0].age);
+                    alert('name of ' + data.networkUsers[0].name);
+                    alert('description [may be blank]: ' + data.networkUsers[0].about_me);
+                    alert('profile pic @ ' + data.networkUsers[0].profile_image);
+                    alert('location @ ' + data.networkUsers[0].location);
+                    
+                    
+                },                
+                error: errorAuth(),
+                // No particular scope modification
+                networkUsers: true
+            });            
+        }
+    </script>
+    
+    <div>
+        <form>
+            <h1>Inspiration.org Signup Page</h1>
+            Desired username: <input type ="text" value ="desiredUsername">
+            <br/>
+            <br/>
+            <h2 style="color:red">More fields: </h2>
+            <h3>Stack Overflow</h3>
+            Fill out manually or with Stack Overflow:<br/><br/>
+            <button type="button" onclick="getStackData();" name ="SignUp" id ="SignUp" disabled>Get info with Stack overflow </button>
+            <br/>
+            <br/>
+            <h3>By hand</h3>
+            Name: 
+            <input type ="text" id="name"><br/>
+            Description: 
+            <input type ="text" id="description"><br/>
+            Pic URL: 
+            <input type ="text" id="url"><br/>
+            Age: 
+            <input type ="text" id="age"><br/>
+            Location: 
+            <input type ="text" id="location"><br/><br/>
+            <input type="submit" value ="COMPLETE & SUBMIT FORM">
+            <br/>
+        </form>
+        <div id ="target"></div>
+    </div>
+    </body>
+</html>
