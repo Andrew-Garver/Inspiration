@@ -1,0 +1,68 @@
+/* 
+    Created on : Nov 21, 2015, 12:14:29 PM
+    Author     : Andrew Garver
+*/
+
+a.title {
+    margin-top: 5%;
+    margin-left: 4%;
+}
+
+div.userInfo {
+    margin-left: 3%;
+    margin-right: 4%;
+}
+
+div.userButtons {
+    float: right;
+    position: relative;
+    padding-right: 4%;
+}
+
+div.panel {
+    text-align:center;
+}
+
+#custom-search-input {
+    margin:0;
+    margin-top: 10px;
+    padding: 0;
+}
+
+#custom-search-input .search-query {
+    padding-right: 3px;
+    padding-right: 4px \9;
+    padding-left: 3px;
+    padding-left: 4px \9;
+    /* IE7-8 doesn't have border-radius, so don't indent the padding */
+
+    margin-bottom: 10px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+
+    width: 200px;
+}
+.glyphicon {
+    top:-1px;
+}
+
+#custom-search-input button {
+    border: 0;
+    background: none;
+    /** belows styles are working good */
+    padding: 2px 5px;
+    margin-top: 0px;
+    position: relative;
+    left: -28px;
+    /* IE7-8 doesn't have border-radius, so don't indent the padding */
+    margin-bottom: 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    color:#9999ff;
+}
+
+.search-query:focus + button {
+    z-index: 3;   
+}
