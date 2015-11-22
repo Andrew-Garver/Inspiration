@@ -38,7 +38,7 @@
         <div class="userInfo">
             <div style="width:500px;margin:auto auto;">
                 <div class="well form-group form-group-sm">  
-                    <button onClick="window.location.href='facebookLogin'"  type="button" class="btn btn-primary" name="SignUp" id="SignUp" disabled>Login with Facebook</button><br><br>
+                    <button onClick="window.location.href='facebookLogin'"  type="button" class="btn btn-primary" name="SignUp" id="SignUp">Login with Facebook</button><br><br>
                     <form>
                         <h4>Or, create an account below using your email</h4>
                         <div class="row">
