@@ -23,12 +23,11 @@
             <div class="userButtons">
               <div class="dropdown">
                                   <%
-                      if(session.getAttribute("username") != null) {
-                          out.print("<h1>Logged In</h1>");
+                      if(session.getAttribute("loggedIn") != null) {
                           out.print("<button class=\"btn btn-primary dropdown-toggle\" style=\" margin-bottom: 20px;\"" +
                                     "type=\"button\" data-toggle=\"dropdown\">" +
-                                    //session.getAttribute("username") +
-                                    "<span class=\"caret\"></span></button>" +
+                                    session.getAttribute("name") +
+                                    " <span class=\"caret\"></span></button>" +
                                     "<ul class=\"dropdown-menu\">" +
                                     "<li><a href=\"viewProfile.jsp\">View/Edit Profile</a></li>" +
                                     "<li><a href=\"#\">Some link</a></li>" +

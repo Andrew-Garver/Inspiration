@@ -12,17 +12,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import facebook4j.Facebook; 
-import facebook4j.FacebookException;
-import facebook4j.PictureSize;
 import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Andrew Garver
  */
-@WebServlet(name = "CallBack", urlPatterns = {"/CallBack"})
-public class CallBack extends HttpServlet {
+@WebServlet(name = "signOut", urlPatterns = {"/signOut"})
+public class signOut extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +38,10 @@ public class CallBack extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CallBack</title>");
+            out.println("<title>Servlet signOut</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CallBack at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet signOut at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,40 +60,11 @@ public class CallBack extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        HttpSession session = request.getSession(true);
-        request.getSession().setAttribute("loggedIn", true);
-
-        Facebook facebook = (Facebook) request.getSession().getAttribute("facebook");
-
-        String oauthCode = request.getParameter("code");
-
-        try {
-            facebook.getOAuthAccessToken(oauthCode);
-        } catch (FacebookException e) {
-            e.printStackTrace();
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
         }
-        
-        try {
-        request.getSession().setAttribute("name", facebook.getName());
-        request.getSession().setAttribute("id", facebook.getId());
-        request.getSession().setAttribute("profilePic", facebook.getPictureURL(PictureSize.large));
-        request.getSession().setAttribute("birthday", facebook.getMe().getBirthday());
-        request.getSession().setAttribute("bio", facebook.getMe().getBio());
-        request.getSession().setAttribute("homeTown", facebook.getMe().getHometown());
-        request.getSession().setAttribute("education", facebook.getMe().getEducation());
-        request.getSession().setAttribute("country", facebook.getMe().getLocale());
-        request.getSession().setAttribute("work", facebook.getMe().getWork());
-        request.getSession().setAttribute("website", facebook.getMe().getWebsite());
-        } catch (IllegalStateException e) {
-            //response.sendRedirect("error.jsp");
-        } catch (FacebookException e) {
-            //response.sendRedirect("error.jsp");
-
-        }
-        
         response.sendRedirect("homepage.jsp");
-
-        //processRequest(request, response);
     }
 
     /**

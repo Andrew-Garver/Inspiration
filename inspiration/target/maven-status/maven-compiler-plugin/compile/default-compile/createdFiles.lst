@@ -1,2 +1,4 @@
+facebook\signOut.class
 facebook\facebookLogin.class
+facebook\ShowFriends.class
 facebook\CallBack.class
