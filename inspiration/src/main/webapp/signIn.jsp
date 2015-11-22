@@ -37,32 +37,27 @@
         <hr>
         <div class="userInfo">
             <div class="col-md-4"></div>
-            <div class="col-md-6"></div>
+            <div class="col-md-6">
+                    <form>
+                        <h1>Sign in Page</h1><br/>
+                        <button onClick="window.location.href='facebookLogin'" type="button" name ="SignUp" id ="SignUp">Sign in with Facebook</button>
+                        <br/>
+                        <br/>
+                        <h4>Or</h4>
+                        <h3>Sign in with your email address</h3>
+                        Email: <br/>                        
+                        <input type ="text" name ="email" id="email"><br/><br/>
+                        Password: <br>
+                        <input type="password" name="password" id="password"><br><br>
+                        Confirm Password: <br>
+                        <input type="password" name="password" id="password"><br><br>
+                        <input type="submit" value ="Submit form">
+                        <br/>
+                        <br/>
+                        <br/>
+                    </form>
+            </div>
             <div class="col-md-2">
-                <form action="#" method="post">
-                    <div id="custom-search-input">
-                        <div class="input-group col-md-12">
-                            <input type="text" class="search-query form-control" placeholder="Search" name="keyword" />
-                            <span class="input-group-btn">
-                                <button class="btn btn-danger" type="submit">
-                                    <span class="glyphicon glyphicon-search"></span>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                </form>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <p style="font-size:24px">Topics</p>
-                        <p style="font-size:18px"><a href="#">Mathematics</a></p>
-                        <p style="font-size:18px"><a href="#">Literature</a></p>
-                        <p style="font-size:18px"><a href="#">Economics</a></p>
-                        <p style="font-size:18px"><a href="#">Homemaking</a></p>
-                        <p style="font-size:18px"><a href="#">Computer Science</a></p>
-                        <p style="font-size:18px"><a href="#">Web Design</a></p>
-                        <p style="font-size:18px"><a href="#">Athletics</a></p>
-                    </div>
-                </div>
             </div>
         </div>
     </body>

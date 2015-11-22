@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import facebook4j.Facebook; 
 import facebook4j.FacebookException;
+import facebook4j.PictureSize;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -77,6 +78,15 @@ public class CallBack extends HttpServlet {
         
         try {
         request.getSession().setAttribute("name", facebook.getName());
+        request.getSession().setAttribute("id", facebook.getId());
+        request.getSession().setAttribute("profilePic", facebook.getPictureURL(PictureSize.large));
+        request.getSession().setAttribute("birthday", facebook.getMe().getBirthday());
+        request.getSession().setAttribute("bio", facebook.getMe().getBio());
+        request.getSession().setAttribute("homeTown", facebook.getMe().getHometown());
+        request.getSession().setAttribute("education", facebook.getMe().getEducation());
+        request.getSession().setAttribute("country", facebook.getMe().getLocale());
+        request.getSession().setAttribute("work", facebook.getMe().getWork());
+        request.getSession().setAttribute("website", facebook.getMe().getWebsite());
         } catch (IllegalStateException e) {
             e.printStackTrace();
         } catch (FacebookException e) {
