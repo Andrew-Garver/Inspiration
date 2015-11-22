@@ -38,7 +38,7 @@
         <div class="userInfo">
             <div style="width:500px;margin:auto auto;">
                 <div class="well form-group form-group-sm">  
-                    <button type="button" class="btn btn-primary" name="SignUp" id="SignUp" disabled>Login with Facebook</button><br><br>
+                    <button onClick="window.location.href='facebookLogin'"  type="button" class="btn btn-primary" name="SignUp" id="SignUp" disabled>Login with Facebook</button><br><br>
                     <form>
                         <h4>Or, create an account below</h4>
                         <div class="row">
@@ -57,6 +57,10 @@
                                 <input class="form-control" type="text" name="age" id="age"><br>
                                 Location:  <br/>
                                 <input class="form-control" type="text" name="location" id="location"><br>
+                                Password: <br>
+                                <input class="form-control" type="password" name="password" id="password"><br><br>
+                                Confirm Password: <br>
+                                <input class="form-control" type="password" name="password" id="password"><br><br>
                             </div>
                         </div>
                         <div class="row">
