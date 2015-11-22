@@ -70,3 +70,38 @@ div.panel {
 .register-input {
     width:200px;
 }
+
+.topicsList {
+    padding: 0;
+}
+.topicsList .topicsTitle {
+    font-size: 24px;
+    padding: 5px 8px;
+    text-align: left;
+}
+.topicsList p a {
+    display: block;
+    background-color: #336699;
+    color: white;
+    width: 100%;
+    height: 100%;
+    padding: 5px 8px;
+    border-bottom: 1px solid white;
+    text-align: left;
+}
+.topicsList p a:hover {
+    box-shadow: inset 400px 0 rgba(0,0,0,0.2);
+}
+.topicsList p {
+    margin: 0;
+    font-size: 18px;
+}
+
+/* User page */
+.userInfo .userListDetails {
+    font-size: 18px;
+}
+.userInfo .userDetails {
+    font-weight: bold;
+    font-size: 1.1em;
+}

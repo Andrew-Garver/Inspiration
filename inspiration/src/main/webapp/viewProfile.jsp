@@ -58,7 +58,7 @@
             </div>
             <div class="col-md-6">
                 <h2>About A. Real Name</h2>
-                <h4>
+                <p>
                     Lorem ipsum dolor sit amet, maiores ornare ac fermentum, imperdiet ut vivamus a, 
                     nam lectus at nunc. Quam euismod sem, semper ut potenti pellentesque quisque. In 
                     eget sapien sed, sit duis vestibulum ultricies, placerat morbi amet vel, nullam in 
@@ -72,11 +72,11 @@
                     nulla tincidunt, feugiat est erat dui tempor, fusce tortor auctor vestibulum. Venenatis 
                     praesent risus orci, ante nam volutpat erat. Cursus non mollis interdum maecenas, consequat 
                     imperdiet penatibus enim, tristique luctus tellus eos accumsan, ridiculus erat laoreet nunc.
-                </h4>
-                <h3>Age 37</h3>
-                <h3>Location The Alps</h3>
-                <h3>Social Media</h3>
-                <h3>Web site</h3>
+                </p>
+                <p class="userListDetails">Age: <span class="userDetails">37</span></p>
+                <p class="userListDetails">Location:  <span class="userDetails">The Alps</span></p>
+                <p class="userListDetails">Social Media</p>
+                <p class="userListDetails">Web site</p>
             </div>
             <div class="col-md-2">
                 <form action="#" method="post">
@@ -92,15 +92,15 @@
                     </div>
                 </form>
                 <div class="panel panel-default">
-                    <div class="panel-body">
-                        <p style="font-size:24px">Topics</p>
-                        <p style="font-size:18px"><a href="#">Mathematics</a></p>
-                        <p style="font-size:18px"><a href="#">Literature</a></p>
-                        <p style="font-size:18px"><a href="#">Economics</a></p>
-                        <p style="font-size:18px"><a href="#">Homemaking</a></p>
-                        <p style="font-size:18px"><a href="#">Computer Science</a></p>
-                        <p style="font-size:18px"><a href="#">Web Design</a></p>
-                        <p style="font-size:18px"><a href="#">Athletics</a></p>
+                    <div class="panel-body topicsList">
+                        <p class="topicsTitle">Topics</p>
+                        <p><a href="#">Mathematics</a></p>
+                        <p><a href="#">Literature</a></p>
+                        <p><a href="#">Economics</a></p>
+                        <p><a href="#">Homemaking</a></p>
+                        <p><a href="#">Computer Science</a></p>
+                        <p><a href="#">Web Design</a></p>
+                        <p><a href="#">Athletics</a></p>
                     </div>
                 </div>
             </div>
