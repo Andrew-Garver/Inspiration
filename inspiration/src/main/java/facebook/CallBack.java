@@ -88,9 +88,10 @@ public class CallBack extends HttpServlet {
         request.getSession().setAttribute("work", facebook.getMe().getWork());
         request.getSession().setAttribute("website", facebook.getMe().getWebsite());
         } catch (IllegalStateException e) {
-            e.printStackTrace();
+            //response.sendRedirect("error.jsp");
         } catch (FacebookException e) {
-            e.printStackTrace();
+            //response.sendRedirect("error.jsp");
+
         }
         
         response.sendRedirect("homepage.jsp");
