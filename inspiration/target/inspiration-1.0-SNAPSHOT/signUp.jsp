@@ -51,41 +51,42 @@
         </div>
         <hr>
         <div class="userInfo">
-            <div class="col-md-4"></div>
-            <div class="col-md-6">
-                    
+            <div style="width:500px;margin:auto auto;">
+                <div class="well form-group form-group-sm">  
+                    <button onClick="window.location.href='facebookLogin'"  type="button" class="btn btn-primary" name="SignUp" id="SignUp">Login with Facebook</button><br><br>
                     <form>
-                        <h1>Signup Page</h1><br/>
-                        <button onClick="window.location.href='facebookLogin'" type="button" name ="SignUp" id ="SignUp">Sign up with Facebook</button>
-                        <br/>
-                        <br/>
-                        <h4>Or</h4>
-                        <h3>Sign up with your email address</h3>
-                        Email: <br/>                        
-                        <input type ="text" name ="email" id="email"><br/><br/>
-                        Password: <br>
-                        <input type="password" name="password" id="password"><br><br>
-                        Confirm Password: <br>
-                        <input type="password" name="password" id="password"><br><br>
-                        Name: <br/>
-                        <input type ="text" name ="name" id="name"><br/><br/>
-                        Description:  <br/>
-                        <input type ="text" name ="description" id="description"><br/><br/>
-                        Pic URL:  <br/>
-                        <input type ="text" name ="url" id="url"><br/><br/>
-                        Age:  <br/>
-                        <input type ="text" name ="age" id="age"><br/><br/>
-                        Location:  <br/>
-                        <input type ="text" name ="location" id="location"><br/><br/>
-                        About me: <br/>
-                        <textarea cols=45 rows=5 name="about"></textarea><br/><br/>
-                        <input type="submit" value ="Submit form">
-                        <br/>
-                        <br/>
-                        <br/>
+                        <h4>Or, create an account below using your email</h4>
+                        <div class="row">
+                            <div class="col-md-5">
+                                Email: <br>                        
+                                <input class="form-control" type="email" name="email" id="email" required><br>
+                                Name: <br>
+                                <input class="form-control" type="text" name="name" id="name" required><br>
+                                Description:  <br>
+                                <input class="form-control" type="text" name="description" id="description"><br>
+                                Pic URL:  <br/>
+                                <input class="form-control" type="text" name="url" id="url"><br>
+                            </div>
+                            <div class="col-md-5" style="margin-left:20px;">
+                                Age:  <br/>
+                                <input class="form-control" type="text" name="age" id="age"><br>
+                                Location:  <br/>
+                                <input class="form-control" type="text" name="location" id="location"><br>
+                                Password: <br>
+                                <input class="form-control" type="password" name="password" id="password"><br>
+                                Confirm Password: <br>
+                                <input class="form-control" type="password" name="password" id="password"><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                About me:
+                                <textarea class="form-control" cols=45 rows=5 name="about"></textarea><br/><br/>
+                            </div>
+                        </div>
+                        <input class="btn btn-default pull-right" type="submit" value="Register"><br><br>
                     </form>
-            </div>
-            <div class="col-md-2">
+                </div>
             </div>
         </div>
     </body>
