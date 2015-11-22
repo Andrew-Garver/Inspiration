@@ -44,23 +44,23 @@
                         <div class="row">
                             <div class="col-md-5">
                                 Email: <br>                        
-                                <input class="form-control" type="email" name="email" id="email" required><br>
+                                <input class="form-control register-input" type="email" name="email" id="email" required><br>
                                 Name: <br>
-                                <input class="form-control" type="text" name="name" id="name" required><br>
+                                <input class="form-control register-input" type="text" name="name" id="name" required><br>
                                 Description:  <br>
-                                <input class="form-control" type="text" name="description" id="description"><br>
+                                <input class="form-control register-input" type="text" name="description" id="description"><br>
                                 Pic URL:  <br/>
-                                <input class="form-control" type="text" name="url" id="url"><br>
+                                <input class="form-control register-input" type="text" name="url" id="url"><br>
                             </div>
                             <div class="col-md-5" style="margin-left:20px;">
                                 Age:  <br/>
-                                <input class="form-control" type="text" name="age" id="age"><br>
+                                <input class="form-control register-input" type="text" name="age" id="age"><br>
                                 Location:  <br/>
-                                <input class="form-control" type="text" name="location" id="location"><br>
+                                <input class="form-control register-input" type="text" name="location" id="location"><br>
                                 Password: <br>
-                                <input class="form-control" type="password" name="password" id="password"><br>
+                                <input class="form-control register-input" type="password" name="password" id="password"><br>
                                 Confirm Password: <br>
-                                <input class="form-control" type="password" name="password" id="password"><br>
+                                <input class="form-control register-input" type="password" name="password" id="password"><br>
                             </div>
                         </div>
                         <div class="row">

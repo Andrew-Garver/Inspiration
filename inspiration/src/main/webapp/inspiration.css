@@ -66,3 +66,7 @@ div.panel {
 .search-query:focus + button {
     z-index: 3;   
 }
+
+.register-input {
+    width:200px;
+}
