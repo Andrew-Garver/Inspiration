@@ -72,7 +72,16 @@ public class ShowFriends extends HttpServlet {
             out.write("Your name is: " + facebook.getName() + "<br>");
             out.write("Your id is: " + facebook.getId() + "<br>");
             out.write("<img src=\"" +facebook.getPictureURL(PictureSize.large)+"\" alt=\"Mountain View\" style=\"width:304px;height:228px;\"><br>");
-            out.write("<img src=\"" +facebook.getSSLPictureURL()+"\" alt=\"Mountain View\" style=\"width:304px;height:228px;\"><br>");
+            out.write("Your birthday is: " + facebook.getMe().getBirthday() + "<br>");
+            out.write("Your age is: " + facebook.getMe().getAgeRange() + "<br>");
+            out.write("Your bio is: " + facebook.getMe().getBio() + "<br>");
+            out.write("Your hometown is: " + facebook.getMe().getHometown() + "<br>");
+            out.write("Your education is: " + facebook.getMe().getEducation() + "<br>");
+            out.write("Your locale is: " + facebook.getMe().getLocale() + "<br>");
+            out.write("Your work is: " + facebook.getMe().getWork() + "<br>");
+            out.write("Your location is: " + facebook.getMe().getLocation() + "<br>");
+            out.write("Your website is: " + facebook.getMe().getWebsite() + "<br>");
+
         } catch (IllegalStateException e) {
             e.printStackTrace();
         } catch (FacebookException e) {
