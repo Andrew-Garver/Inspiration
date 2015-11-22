@@ -13,7 +13,7 @@
     </head>
     <body>
         <div> 
-            <a href="SignIn">Click here to login with Facebook</a> 
+            <a href="facebookLogin">Click here to login with Facebook</a> 
         </div> 
     </body>
 </html>

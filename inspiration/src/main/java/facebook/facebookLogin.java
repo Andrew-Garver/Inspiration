@@ -12,8 +12,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import facebook4j.Facebook; 
+import facebook4j.Facebook;
 import facebook4j.FacebookFactory;
+import facebook4j.auth.AccessToken;
 
 /**
  *
@@ -62,6 +63,13 @@ public class facebookLogin extends HttpServlet {
             throws ServletException, IOException {
 
         Facebook facebook = new FacebookFactory().getInstance();
+
+        facebook.setOAuthAppId("423248727863717", "");
+
+        String accessTokenString = "CAACEdEose0cBANz4OBNXjIzOhQLl0JMx5V29KtixqqZCtdeOE9k1IeZCfyQf1pUbTKB2kzbfaGj0WiEtEHe8VxR4vJfDvrUFIWLPfkSzS0FkECbRIBwLWwlpCepAvCWlapwmgYSqRZAEJntYcohQTthvy60u7qeEnpyLBajKQ47Ni2qhP3FNYyaQznim7ZAd7ZBMenVmvg9jeAfZBkZCIQ4";
+        AccessToken at = new AccessToken(accessTokenString);
+        // Set access token.
+        facebook.setOAuthAccessToken(at);
 
         request.getSession().setAttribute("facebook", facebook);
 

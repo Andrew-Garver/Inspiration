@@ -37,7 +37,9 @@
         <hr>
         <div class="userInfo">
             <div class="col-md-4"></div>
-            <div class="col-md-6"></div>
+            <div class="col-md-6">
+                After logging in, <a href="ShowFriends">Click here to see your friends</a>
+            </div>
             <div class="col-md-2">
                 <form action="#" method="post">
                     <div id="custom-search-input">

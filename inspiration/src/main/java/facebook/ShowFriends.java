@@ -5,6 +5,11 @@
  */
 package facebook;
 
+import facebook4j.Facebook;
+import facebook4j.FacebookException;
+import facebook4j.Friend;
+import facebook4j.PictureSize;
+import facebook4j.ResponseList;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,15 +17,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import facebook4j.Facebook; 
-import facebook4j.FacebookException;
 
 /**
  *
  * @author Andrew Garver
  */
-@WebServlet(name = "CallBack", urlPatterns = {"/CallBack"})
-public class CallBack extends HttpServlet {
+@WebServlet(name = "ShowFriends", urlPatterns = {"/ShowFriends"})
+public class ShowFriends extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +42,10 @@ public class CallBack extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CallBack</title>");
+            out.println("<title>Servlet ShowFriends</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CallBack at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ShowFriends at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,16 +66,20 @@ public class CallBack extends HttpServlet {
 
         Facebook facebook = (Facebook) request.getSession().getAttribute("facebook");
 
-        String oauthCode = request.getParameter("code");
+        PrintWriter out = response.getWriter();
 
         try {
-            facebook.getOAuthAccessToken(oauthCode);
+            out.write("Your name is: " + facebook.getName() + "<br>");
+            out.write("Your id is: " + facebook.getId() + "<br>");
+            out.write("<img src=\"" +facebook.getPictureURL(PictureSize.large)+"\" alt=\"Mountain View\" style=\"width:304px;height:228px;\"><br>");
+            out.write("<img src=\"" +facebook.getSSLPictureURL()+"\" alt=\"Mountain View\" style=\"width:304px;height:228px;\"><br>");
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
         } catch (FacebookException e) {
             e.printStackTrace();
         }
-        response.sendRedirect("homepage.jsp");
 
-        //processRequest(request, response);
+        // processRequest(request, response);
     }
 
     /**
