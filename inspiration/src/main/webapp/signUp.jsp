@@ -41,12 +41,17 @@
                     
                     <form>
                         <h1>Signup Page</h1><br/>
-                        <button type="button" name ="SignUp" id ="SignUp" disabled>Log in with facebook</button>
+                        <button onClick="window.location.href='facebookLogin'" type="button" name ="SignUp" id ="SignUp">Sign up with Facebook</button>
                         <br/>
                         <br/>
-                        <h3>Or By hand</h3>
+                        <h4>Or</h4>
+                        <h3>Sign up with your email address</h3>
                         Email: <br/>                        
                         <input type ="text" name ="email" id="email"><br/><br/>
+                        Password: <br>
+                        <input type="password" name="password" id="password"><br><br>
+                        Confirm Password: <br>
+                        <input type="password" name="password" id="password"><br><br>
                         Name: <br/>
                         <input type ="text" name ="name" id="name"><br/><br/>
                         Description:  <br/>

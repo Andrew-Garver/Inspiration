@@ -39,6 +39,7 @@
             <div class="col-md-4"></div>
             <div class="col-md-6">
                 After logging in, <a href="ShowFriends">Click here to see your friends</a>
+                <p>${name}</p>
             </div>
             <div class="col-md-2">
                 <form action="#" method="post">

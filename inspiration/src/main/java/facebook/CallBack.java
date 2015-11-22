@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import facebook4j.Facebook; 
 import facebook4j.FacebookException;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -60,6 +61,9 @@ public class CallBack extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        HttpSession session = request.getSession(true);
+        request.getSession().setAttribute("loggedIn", true);
 
         Facebook facebook = (Facebook) request.getSession().getAttribute("facebook");
 
@@ -70,6 +74,15 @@ public class CallBack extends HttpServlet {
         } catch (FacebookException e) {
             e.printStackTrace();
         }
+        
+        try {
+        request.getSession().setAttribute("name", facebook.getName());
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (FacebookException e) {
+            e.printStackTrace();
+        }
+        
         response.sendRedirect("homepage.jsp");
 
         //processRequest(request, response);
