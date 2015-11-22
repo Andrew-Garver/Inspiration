@@ -16,7 +16,7 @@
         <title>Inspiration.org</title>
     </head>
     <body>
-        <h1><a class="title" href="#">Inspiration.org</a></h1>
+        <h1><a class="title" href="homepage.jsp">Inspiration.org</a></h1>
         <div class="topLinks">
             <a style="padding-left:4%" href="#">About Inspiration.org</a>
             <a style="padding-left:10px" href="#">Site Rules</a>
@@ -63,8 +63,6 @@
                         Email: <br/>                        
                         <input type ="text" name ="email" id="email"><br/><br/>
                         Password: <br>
-                        <input type="password" name="password" id="password"><br><br>
-                        Confirm Password: <br>
                         <input type="password" name="password" id="password"><br><br>
                         <input type="submit" value ="Submit form">
                         <br/>

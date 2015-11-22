@@ -16,7 +16,7 @@
         <title>Inspiration.org</title>
     </head>
     <body>
-        <h1><a class="title" href="#">Inspiration.org</a></h1>
+        <h1><a class="title" href="homepage.jsp">Inspiration.org</a></h1>
         <div class="topLinks">
             <a style="padding-left:4%" href="#">About Inspiration.org</a>
             <a style="padding-left:10px" href="#">Site Rules</a>
