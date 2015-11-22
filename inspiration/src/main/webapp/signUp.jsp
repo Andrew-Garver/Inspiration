@@ -40,7 +40,7 @@
                 <div class="well form-group form-group-sm">  
                     <button onClick="window.location.href='facebookLogin'"  type="button" class="btn btn-primary" name="SignUp" id="SignUp" disabled>Login with Facebook</button><br><br>
                     <form>
-                        <h4>Or, create an account below</h4>
+                        <h4>Or, create an account below using your email</h4>
                         <div class="row">
                             <div class="col-md-5">
                                 Email: <br>                        
@@ -58,9 +58,9 @@
                                 Location:  <br/>
                                 <input class="form-control" type="text" name="location" id="location"><br>
                                 Password: <br>
-                                <input class="form-control" type="password" name="password" id="password"><br><br>
+                                <input class="form-control" type="password" name="password" id="password"><br>
                                 Confirm Password: <br>
-                                <input class="form-control" type="password" name="password" id="password"><br><br>
+                                <input class="form-control" type="password" name="password" id="password"><br>
                             </div>
                         </div>
                         <div class="row">
