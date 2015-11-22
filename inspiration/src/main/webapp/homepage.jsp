@@ -22,24 +22,38 @@
             <a style="padding-left:10px" href="#">Site Rules</a>
             <div class="userButtons">
               <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" style=" margin-bottom: 20px;"
-                        type="button" data-toggle="dropdown">Username
-                <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                    <li><a href="viewProfile.jsp">View/Edit Profile</a></li>
-                    <li><a href="#">Some link</a></li>
-                    <li><a href="#">Another link</a></li>
-                </ul>
-                  <button class="btn btn-primary" style="margin-left:10px; margin-bottom: 20px;" type="button">Log out</button>
+                                  <%
+                      if(session.getAttribute("username") != null) {
+                          out.print("<h1>Logged In</h1>");
+                          out.print("<button class=\"btn btn-primary dropdown-toggle\" style=\" margin-bottom: 20px;\"" +
+                                    "type=\"button\" data-toggle=\"dropdown\">" +
+                                    //session.getAttribute("username") +
+                                    "<span class=\"caret\"></span></button>" +
+                                    "<ul class=\"dropdown-menu\">" +
+                                    "<li><a href=\"viewProfile.jsp\">View/Edit Profile</a></li>" +
+                                    "<li><a href=\"#\">Some link</a></li>" +
+                                    "<li><a href=\"#\">Another link</a></li>" +
+                                    "</ul>" +
+                                    "<a href = \"signOut\">" +
+                                    "<button class=\"btn btn-primary\" style=\"margin-left:10px; margin-bottom: 20px;\" type=\"button\">Log out</button>" +
+                                    "</a>");
+                      }
+                      else {
+                          out.print("<a href = \"signIn.jsp\"" +
+                                    "<button class=\"btn btn-success\" onclick =\"login();\" style=\"margin-left:10px; min-width:80px; max-width:80px; margin-bottom:20px\" type=\"button\">Log In</button>" +
+                                    "</a>");
+                          out.print("<a href = \"signUp.jsp\"" +
+                                    "<button class=\"btn btn-primary\" style=\"margin-left:10px; min-width:80px; max-width:80px; margin-bottom:20px\" type=\"button\">Sign Up</button>" + 
+                                    "</a>");
+                      }
+                      %>
               </div>
             </div>
         </div>
         <hr>
         <div class="userInfo">
             <div class="col-md-4"></div>
-            <div class="col-md-6">
-                After logging in, <a href="ShowFriends">Click here to see your friends</a>
-            </div>
+            <div class="col-md-6"></div>
             <div class="col-md-2">
                 <form action="#" method="post">
                     <div id="custom-search-input">
