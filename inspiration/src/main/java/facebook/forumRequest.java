@@ -67,12 +67,12 @@ public class forumRequest extends HttpServlet {
     }
         
     protected String getEndNewBox(){
-            String endBox = "        <form class=\"form-inline\" role=\"form\">\n" +
+            String endBox = "        <form action=\"PostComment\" method=\"post\" class=\"form-inline\" role=\"form\">\n" +
                             "            <div class=\"form-group\">\n" +
                             "                <input class=\"form-control\" type=\"text\" placeholder=\"Your comments\" />\n" +
                             "            </div>            \n" +
                             "            <div class=\"form-group\">\n" +
-                            "                <button class=\"btn btn-default\">Add</button>\n" +
+                            "                <input type=\"submit\" value=\"Add\" class=\"btn btn-default\">\n" +
                             "            </div>\n" +
                             "        </form>";
             return endBox;
@@ -135,7 +135,7 @@ public class forumRequest extends HttpServlet {
         String SQL = "SELECT * FROM posts WHERE post_id = " + getID;
         ResultSet rs;
         try{
-            Class.forName("com.mysql.jdbc.Driver"); // Loads a class in by a dynamic string's name vs static naming convetntions    
+            Class.forName("com.mysql.jdbc.Driver"); // Loads a class in by a dynamic string's name vs static naming conventions    
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             stmt = conn.createStatement();
 
