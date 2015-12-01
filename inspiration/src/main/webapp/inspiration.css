@@ -8,6 +8,12 @@
     margin-left:auto;
     margin-right:auto;
 }
+a.aboutInspiration {
+    padding-left:4%;
+}
+a.siteRules {
+    padding-left:10px;
+}
 
 a.title {
     margin-top: 5%;
@@ -113,4 +119,8 @@ div.panel {
 .userInfo .userDetails {
     font-weight: bold;
     font-size: 1.1em;
+}
+.userInfo .karma {
+    text-align: center;
+    font-size: 32px;
 }
