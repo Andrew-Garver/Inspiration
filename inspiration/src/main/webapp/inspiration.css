@@ -13,6 +13,9 @@ a.title {
     margin-top: 5%;
     margin-left: 4%;
 }
+a.title img {
+    margin-left: -15px;
+}
 
 div.userInfo {
     margin-left: 3%;
