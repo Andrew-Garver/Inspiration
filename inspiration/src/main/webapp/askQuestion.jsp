@@ -82,18 +82,7 @@
                         </div>
                     </div>
                 </form>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <p style="font-size:24px">Topics</p>
-                        <p style="font-size:18px"><a href="#">Mathematics</a></p>
-                        <p style="font-size:18px"><a href="#">Literature</a></p>
-                        <p style="font-size:18px"><a href="#">Economics</a></p>
-                        <p style="font-size:18px"><a href="#">Homemaking</a></p>
-                        <p style="font-size:18px"><a href="#">Computer Science</a></p>
-                        <p style="font-size:18px"><a href="#">Web Design</a></p>
-                        <p style="font-size:18px"><a href="#">Athletics</a></p>
-                    </div>
-                </div>
+                <jsp:include page="sectionListings.jsp" />
             </div>
         </div>
     </body>
