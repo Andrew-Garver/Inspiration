@@ -1,4 +1,4 @@
-<h1><a class="title" href="/inspiration/homepage.jsp">Inspiration.org</a></h1>
+<h1><a class="title" href="/inspiration/homepage.jsp"><img src="ms-icon-70x70.png" title="Home Page">Inspiration.org</a></h1>
 <div class="topLinks">
     <a style="padding-left:4%" href="#">About Inspiration.org</a>
     <a style="padding-left:10px" href="#">Site Rules</a>
