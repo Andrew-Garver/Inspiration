@@ -20,11 +20,11 @@
         <div class="userInfo">
             <div class="col-md-4">
                 <img class="img-responsive" src="defaultUserPic.png" alt="User Profile Picture">
-                <p style="text-align: center; font-size: 46px">A. Real Name</p>
+                <p style="text-align: center; font-size: 46px"><% out.print(session.getAttribute("name")); %></p>
                 <p style="text-align: center; font-size: 32px">Karma +234</p>
             </div>
             <div class="col-md-6">
-                <h2>About A. Real Name</h2>
+                <h2><% out.print(session.getAttribute("name")); %></h2>
                 <p>
                     Lorem ipsum dolor sit amet, maiores ornare ac fermentum, imperdiet ut vivamus a, 
                     nam lectus at nunc. Quam euismod sem, semper ut potenti pellentesque quisque. In 
