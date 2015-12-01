@@ -12,16 +12,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import facebook4j.Facebook;
-import facebook4j.FacebookFactory;
-import facebook4j.auth.AccessToken;
 
 /**
  *
  * @author Andrew Garver
  */
-@WebServlet(name = "facebookLogin", urlPatterns = {"/facebookLogin"})
-public class facebookLogin extends HttpServlet {
+@WebServlet(name = "AskQuestion", urlPatterns = {"/AskQuestion"})
+public class AskQuestion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +37,10 @@ public class facebookLogin extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet facebookLogin</title>");
+            out.println("<title>Servlet AskQuestion</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet facebookLogin at " + request.getContextPath() + "</h1>");
+            out.println("<h1>This servlet will add the question to the database using the post method</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,28 +58,7 @@ public class facebookLogin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        Facebook facebook = new FacebookFactory().getInstance();
-
-        facebook.setOAuthAppId("423248727863717", "");
-
-        String accessTokenString = "CAAGA8UYTcaUBALmtksLjZAFT3a7Ca3fX6yOfBSAvqBbCdijUdCscV49vCSVpwOR56DgTYEVJkORZByQMBdcUSUXRKnqg5sHTa64ZBAwEUOpWbKGf1oZALtS95hy4nBGuou6mskDFzdoK7GCvhdkefv5RQWgVHPzqLR1BtGKtxJgZCrPIFP8M0XlZBETDU6twgZD";
-        AccessToken at = new AccessToken(accessTokenString);
-        // Set access token.
-        facebook.setOAuthAccessToken(at);
-
-        request.getSession().setAttribute("facebook", facebook);
-
-        StringBuffer requestUrl = request.getRequestURL();
-        int lastSlashIndex = requestUrl.lastIndexOf("/");
-
-        String callBackUrl = requestUrl.substring(0, lastSlashIndex) + "/CallBack";
-
-        String facebookUrl = facebook.getOAuthAuthorizationURL(callBackUrl);
-
-        response.sendRedirect(facebookUrl);
-
-        //processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -96,6 +72,9 @@ public class facebookLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        // Add information to database here.
+        
         processRequest(request, response);
     }
 

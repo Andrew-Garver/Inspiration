@@ -1,4 +1,7 @@
-facebook\signOut.class
-facebook\facebookLogin.class
+facebook\AskQuestion.class
+facebook\forumRequest.class
+facebook\PostComment.class
 facebook\ShowFriends.class
 facebook\CallBack.class
+facebook\signOut.class
+facebook\facebookLogin.class

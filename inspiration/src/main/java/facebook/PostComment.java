@@ -7,21 +7,23 @@ package facebook;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import facebook4j.Facebook;
-import facebook4j.FacebookFactory;
-import facebook4j.auth.AccessToken;
 
 /**
  *
  * @author Andrew Garver
  */
-@WebServlet(name = "facebookLogin", urlPatterns = {"/facebookLogin"})
-public class facebookLogin extends HttpServlet {
+@WebServlet(name = "PostComment", urlPatterns = {"/PostComment"})
+public class PostComment extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +42,10 @@ public class facebookLogin extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet facebookLogin</title>");
+            out.println("<title>Servlet PostComment</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet facebookLogin at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet PostComment at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,28 +63,7 @@ public class facebookLogin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        Facebook facebook = new FacebookFactory().getInstance();
-
-        facebook.setOAuthAppId("423248727863717", "");
-
-        String accessTokenString = "CAAGA8UYTcaUBALmtksLjZAFT3a7Ca3fX6yOfBSAvqBbCdijUdCscV49vCSVpwOR56DgTYEVJkORZByQMBdcUSUXRKnqg5sHTa64ZBAwEUOpWbKGf1oZALtS95hy4nBGuou6mskDFzdoK7GCvhdkefv5RQWgVHPzqLR1BtGKtxJgZCrPIFP8M0XlZBETDU6twgZD";
-        AccessToken at = new AccessToken(accessTokenString);
-        // Set access token.
-        facebook.setOAuthAccessToken(at);
-
-        request.getSession().setAttribute("facebook", facebook);
-
-        StringBuffer requestUrl = request.getRequestURL();
-        int lastSlashIndex = requestUrl.lastIndexOf("/");
-
-        String callBackUrl = requestUrl.substring(0, lastSlashIndex) + "/CallBack";
-
-        String facebookUrl = facebook.getOAuthAuthorizationURL(callBackUrl);
-
-        response.sendRedirect(facebookUrl);
-
-        //processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -96,7 +77,47 @@ public class facebookLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        String getID = request.getParameter("post_id");  
+
+        // Define our constants
+        String DB_URL = "jdbc:mysql://localhost/jsp";
+        String USER = "adminLGMn6AW";
+        String PASS = "Lhh3jeWDXKe1";
+        
+        // Connect to our database
+        Connection conn = null;
+        Statement  stmt = null;
+        String SQL = "INSERT INTO replies (user_id, post_id, content) VALUES (" + request.getSession().getAttribute("id") + 
+                ", " + request.getParameter("post_id") + 
+                ", " + request.getParameter("reply") + ")";
+        boolean executeStatus;
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver"); // Loads a class in by a dynamic string's name vs static naming conventions    
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            stmt = conn.createStatement();
+
+            executeStatus = stmt.execute(SQL);
+        }catch(ClassNotFoundException e) {
+            e.getMessage();
+            e.printStackTrace();
+        }catch(Exception d) {
+            d.printStackTrace();
+        }finally{ // Clean up! Clean up! Everybody clean up!
+            try{
+                if(stmt != null)
+                    stmt.close();}
+                catch(Exception se){ 
+                    se.printStackTrace();}
+            try{
+                if(conn != null)
+                    conn.close();}
+                catch(Exception se) {
+                    se.printStackTrace();}
+        }
+        response.sendRedirect("forumRequest?entry=" + getID);
+//        processRequest(request, response);
     }
 
     /**

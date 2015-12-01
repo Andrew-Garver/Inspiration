@@ -30,7 +30,7 @@
                                     " <span class=\"caret\"></span></button>" +
                                     "<ul class=\"dropdown-menu\">" +
                                     "<li><a href=\"viewProfile.jsp\">View/Edit Profile</a></li>" +
-                                    "<li><a href=\"#\">Some link</a></li>" +
+                                    "<li><a href=\"askQuestion.jsp\">Ask a question</a></li>" +
                                     "<li><a href=\"#\">Another link</a></li>" +
                                     "</ul>" +
                                     "<a href = \"signOut\">" +
