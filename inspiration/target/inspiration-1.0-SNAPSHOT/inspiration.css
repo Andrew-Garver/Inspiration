@@ -3,6 +3,12 @@
     Author     : Andrew Garver
 */
 
+.center {
+    float:none;
+    margin-left:auto;
+    margin-right:auto;
+}
+
 a.title {
     margin-top: 5%;
     margin-left: 4%;
