@@ -17,7 +17,7 @@
             <div class="col-md-10">
                 <form action="AskQuestion" method="post">
                     
-                    <input class="form-control" type="text" style="max-width: 40%; float:left;" placeholder="Question title">
+                    <input class="form-control" type="text" style="max-width: 40%; float:left;" placeholder="Question title" name="question_title">
                     
                     <div>
                         <select id="category" style="margin-left:20px;">
@@ -29,7 +29,7 @@
                         </select>
                     </div>
                     <br>
-                    <textarea class="form-control" rows="5" name="question" id="question" placeholder="Question text goes here..."></textarea>
+                    <textarea class="form-control" rows="5" name="question_content" id="question" placeholder="Question text goes here..."></textarea>
                     <br><input class="btn btn-primary" type="submit" value="Submit">
                 </form>
 

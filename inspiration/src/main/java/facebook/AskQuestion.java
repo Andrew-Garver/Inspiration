@@ -7,6 +7,10 @@ package facebook;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.getenv;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +44,7 @@ public class AskQuestion extends HttpServlet {
             out.println("<title>Servlet AskQuestion</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>This servlet will add the question to the database using the post method</h1>");
+            out.println("<h1>Servlet AskQuestion at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -75,7 +79,63 @@ public class AskQuestion extends HttpServlet {
         
         // Add information to database here.
         
-        processRequest(request, response);
+//        processRequest(request, response);
+        // Define our constants
+        String DB_URL = "jdbc:mysql://localhost/jsp";
+//        String OS_MYSQL_DB_HOST = getenv("OPENSHIFT_MYSQL_DB_HOST");
+//        String OS_MYSQL_DB_PORT = getenv("OPENSHIFT_MYSQL_DB_PORT");
+//        String DB_URL = "jdbc:mysql://" + OS_MYSQL_DB_HOST + ":" + OS_MYSQL_DB_PORT + "/";
+
+//        String USER = "adminLGMn6AW";
+//        String PASS = "Lhh3jeWDXKe1";
+        String USER = "root";
+        String PASS = "";
+        
+//        String userID = request.getSession().getAttribute("id").toString();
+        String user_id = "1";
+        String post_id = "9";
+        String postTitle = request.getParameter("question_title");
+        String postContent = request.getParameter("question_content");
+        PrintWriter out = response.getWriter();
+        out.println(user_id + " " + post_id + " " + postTitle + " " + postContent);
+        
+        // Connect to our database
+        Connection conn = null;
+        Statement  stmt = null;
+        String SQL = "INSERT INTO posts (user_id, post_id, title, content) VALUES ("
+                + user_id + ", "
+                + post_id + ", "
+                + postTitle + ", "
+                + postContent + ")";
+        boolean executeStatus = false;
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver"); // Loads a class in by a dynamic string's name vs static naming conventions    
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            stmt = conn.createStatement();
+            
+            stmt.executeUpdate(SQL);
+        }catch(ClassNotFoundException e) {
+            out.println(e.getMessage());
+            e.printStackTrace();
+        }catch(Exception d) {
+            d.printStackTrace();
+            out.println(SQL);
+            out.println(d.getMessage());
+
+        }finally{ // Clean up! Clean up! Everybody clean up!
+            try{
+                if(stmt != null)
+                    stmt.close();}
+                catch(Exception se){ 
+                    se.printStackTrace();}
+            try{
+                if(conn != null)
+                    conn.close();}
+                catch(Exception se) {
+                    se.printStackTrace();}
+        }
+//        response.sendRedirect("forumRequest?entry=" + post_id); // comment this out to test the data we're posting
     }
 
     /**
