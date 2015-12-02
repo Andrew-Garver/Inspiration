@@ -8,24 +8,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="inspiration.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <jsp:include page="/modules/head.jsp" />
         <title>View Profile</title>
     </head>
     <body>
         <jsp:include page="/modules/header.jsp" />
         <div class="userInfo">
             <div class="col-md-4">
-                <img class="img-responsive" src="defaultUserPic.png" alt="User Profile Picture">
-                <p style="text-align: center; font-size: 46px">A. Real Name</p>
-                <p style="text-align: center; font-size: 32px">Karma +234</p>
+                <img class="img-responsive" src="images/defaultUserPic.png" alt="User Profile Picture">
+                <p class="karma">Karma +234</p>
             </div>
             <div class="col-md-6">
-                <h2>About A. Real Name</h2>
-                <p>
+                <h2><% out.print(session.getAttribute("name")); %></h2>
+                <p> <!-- This should be pulling from the database -->
                     Lorem ipsum dolor sit amet, maiores ornare ac fermentum, imperdiet ut vivamus a, 
                     nam lectus at nunc. Quam euismod sem, semper ut potenti pellentesque quisque. In 
                     eget sapien sed, sit duis vestibulum ultricies, placerat morbi amet vel, nullam in 
