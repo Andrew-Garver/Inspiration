@@ -3,9 +3,24 @@
     Author     : Andrew Garver
 */
 
+.center {
+    float:none;
+    margin-left:auto;
+    margin-right:auto;
+}
+a.aboutInspiration {
+    padding-left:4%;
+}
+a.siteRules {
+    padding-left:10px;
+}
+
 a.title {
     margin-top: 5%;
     margin-left: 4%;
+}
+a.title img {
+    margin-left: -15px;
 }
 
 div.userInfo {
@@ -81,16 +96,16 @@ div.panel {
 }
 .topicsList p a {
     display: block;
-    background-color: #336699;
+    background-color: #286090;
     color: white;
     width: 100%;
     height: 100%;
     padding: 5px 8px;
-    border-bottom: 1px solid white;
+    margin-bottom: 1px;
     text-align: left;
 }
 .topicsList p a:hover {
-    box-shadow: inset 400px 0 rgba(0,0,0,0.2);
+    box-shadow: inset 800px 0 rgba(0,0,0,0.2);
 }
 .topicsList p {
     margin: 0;
@@ -104,4 +119,8 @@ div.panel {
 .userInfo .userDetails {
     font-weight: bold;
     font-size: 1.1em;
+}
+.userInfo .karma {
+    text-align: center;
+    font-size: 32px;
 }
