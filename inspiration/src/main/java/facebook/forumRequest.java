@@ -91,10 +91,13 @@ public class forumRequest extends HttpServlet {
             return content;
     }
         
-    protected String getEndNewBox(){
+    protected String getEndNewBox(String id){
             String endBox = "        <form action=\"PostComment\" method=\"post\" class=\"form-inline\" role=\"form\">\n" +
                             "            <div class=\"form-group\">\n" +
-                            "                <input class=\"form-control\" type=\"text\" placeholder=\"Your comments\" />\n" +
+                            "               <input type=\"hidden\" name=\"question_id\" value=\"" +
+                            id + 
+                            "\">" +
+                            "                <input class=\"form-control\" name=\"reply\" type=\"text\" placeholder=\"Your comments\" />\n" +
                             "            </div>            \n" +
                             "            <div class=\"form-group\">\n" +
                             "                <input type=\"submit\" value=\"Add\" class=\"btn btn-default\">\n" +
@@ -231,7 +234,7 @@ public class forumRequest extends HttpServlet {
             for(int i = 0; i < content.size(); i++) 
                 out.println(getResponse(names.get(i), photoURLs.get(i), content.get(i), time.get(i)));                
 
-            out.println(getEndNewBox());
+            out.println(getEndNewBox(getID));
             out.println(getEndHTML());
         }
     }

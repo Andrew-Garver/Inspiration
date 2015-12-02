@@ -78,32 +78,44 @@ public class PostComment extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String getID = request.getParameter("post_id");  
+//        String getID = request.getParameter("post_id");
+//        String getID = "1";
 
         // Define our constants
         String DB_URL = "jdbc:mysql://localhost/jsp";
         String USER = "adminLGMn6AW";
         String PASS = "Lhh3jeWDXKe1";
         
+//        String userID = request.getSession().getAttribute("id").toString();
+        String userID = "1";
+        String post_id = request.getParameter("question_id");
+        String reply = request.getParameter("reply");
+        
+        PrintWriter out = response.getWriter();
+        out.println(userID + " " + post_id + " " + reply);
+        
         // Connect to our database
         Connection conn = null;
         Statement  stmt = null;
-        String SQL = "INSERT INTO replies (user_id, post_id, content) VALUES (" + request.getSession().getAttribute("id") + 
-                ", " + request.getParameter("post_id") + 
-                ", " + request.getParameter("reply") + ")";
-        boolean executeStatus;
+        String SQL = "INSERT INTO replies (user_id, post_id, content) VALUES (" + userID + 
+                ", " + post_id + 
+                ", \"" + reply + "\")";
+        boolean executeStatus = false;
         
         try{
             Class.forName("com.mysql.jdbc.Driver"); // Loads a class in by a dynamic string's name vs static naming conventions    
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             stmt = conn.createStatement();
-
-            executeStatus = stmt.execute(SQL);
+            
+            stmt.executeUpdate(SQL);
         }catch(ClassNotFoundException e) {
-            e.getMessage();
+            out.println(e.getMessage());
             e.printStackTrace();
         }catch(Exception d) {
             d.printStackTrace();
+            out.println(SQL);
+            out.println(d.getMessage());
+
         }finally{ // Clean up! Clean up! Everybody clean up!
             try{
                 if(stmt != null)
@@ -116,8 +128,7 @@ public class PostComment extends HttpServlet {
                 catch(Exception se) {
                     se.printStackTrace();}
         }
-        response.sendRedirect("forumRequest?entry=" + getID);
-//        processRequest(request, response);
+        response.sendRedirect("forumRequest?entry=" + post_id); // comment this out to test the data we're posting
     }
 
     /**
