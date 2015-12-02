@@ -22,13 +22,18 @@ public class dbConnection {
     
     // JDBC driver name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String OS_MYSQL_DB_HOST = getenv("OPENSHIFT_MYSQL_DB_HOST");
-    static final String OS_MYSQL_DB_PORT = getenv("OPENSHIFT_MYSQL_DB_PORT");
-    static final String DB_URL = "jdbc:mysql://" + OS_MYSQL_DB_HOST + ":" + OS_MYSQL_DB_PORT + "/";
+    static final String host = getenv("OPENSHIFT_MYSQL_DB_HOST");
+    static final String port = getenv("OPENSHIFT_MYSQL_DB_PORT");
+    static final String DB_URL = "jdbc:mysql://" + host + ":" + port + "/jsp";
 
     //  Database credentials
     static final String USER = "adminLGMn6AW";
     static final String PASS = "Lhh3jeWDXKe1";
+    
+/*    // Define our constants
+    static final String DB_URL = "jdbc:mysql://localhost:8080/jsp";
+    static final String USER = "root"   //your root username
+    static final String PASS = "";      //your root password    */
     
     private Statement stmt = null;
     private Connection conn = null;

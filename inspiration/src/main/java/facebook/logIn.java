@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.getenv;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -75,17 +77,23 @@ public class logIn extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String sql;
+        String password = (String) request.getSession().getAttribute("password");
             if(request.getSession().getAttribute("email") != null){
                 String email = (String) request.getSession().getAttribute("email");
-                sql = "SELECT user_id FROM users WHERE email = '" + email + "'";
+                sql = "SELECT user_id FROM users WHERE email = '" + email + "' AND password = '" + password + "'";
             } else {
                 String username = (String) request.getSession().getAttribute("username");
-                sql = "SELECT user_id FROM users WHERE username = '" + username + "'";
+                sql = "SELECT user_id FROM users WHERE username = '" + username + "' AND password = '" + password + "'";
             }
             dbConnection db = new dbConnection();
             ResultSet rs = db.selectQuery(sql);
-        
-        //processRequest(request, response);
+        try {
+            if(rs.next()) {
+                request.getSession().setAttribute("accountId", rs.getInt("user_id"));
+            }
+        } catch(SQLException se) {
+            se.printStackTrace();
+        }
     }
 
     /**
