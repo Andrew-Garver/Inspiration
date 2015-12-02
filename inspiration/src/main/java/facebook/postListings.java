@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * @author bear
  */
-@WebServlet(name = "forumRequest", urlPatterns = {"/forumRequest"})
-public class forumRequest extends HttpServlet {
+@WebServlet(name = "postListings", urlPatterns = {"/postListings"})
+public class postListings extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -91,16 +91,13 @@ public class forumRequest extends HttpServlet {
             return content;
     }
         
-    protected String getEndNewBox(String id){
-            String endBox = "        <form action=\"PostComment\" method=\"post\" class=\"form-inline\" role=\"form\">\n" +
+    protected String getEndNewBox(){
+            String endBox = "        <form class=\"form-inline\" role=\"form\">\n" +
                             "            <div class=\"form-group\">\n" +
-                            "               <input type=\"hidden\" name=\"question_id\" value=\"" +
-                            id + 
-                            "\">" +
-                            "                <input class=\"form-control\" name=\"reply\" type=\"text\" placeholder=\"Your comments\" />\n" +
+                            "                <input class=\"form-control\" type=\"text\" placeholder=\"Your comments\" />\n" +
                             "            </div>            \n" +
                             "            <div class=\"form-group\">\n" +
-                            "                <input type=\"submit\" value=\"Add\" class=\"btn btn-default\">\n" +
+                            "                <button class=\"btn btn-default\">Add</button>\n" +
                             "            </div>\n" +
                             "        </form>";
             return endBox;
@@ -141,23 +138,17 @@ public class forumRequest extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String getID = request.getParameter("entry");
+        String desiredTopic;
+        desiredTopic= request.getParameter("topic");
  
         // Error checking; We hope this becomes 'true'
         Boolean foundMatch = false;
 
-        Integer posterID = -1;
-        String author = "UNDEFINED";
-        String title = "UNDEFINED";
-        String topic = "UNDEFINED";
-        String pic = "UNDEFINED";
-        String joinDate = "UNDEFINED";
-        
-        Vector<Integer> responderIDs = new Vector<>();        
-        Vector<String> names = new Vector<>();        
-        Vector<String> photoURLs = new Vector<>();        
-        Vector<String> content = new Vector<>();        
-        Vector<String> time = new Vector<>();        
+        Vector<Integer> posterIDs = new Vector<>();        
+        Vector<String> title = new Vector<>();        
+        Vector<String> topics = new Vector<>();        
+        Vector<String> author = new Vector<>();        
+        Vector<String> authorPic = new Vector<>();        
         
         // Define our constants
         String DB_URL = "jdbc:mysql://localhost/jsp";
@@ -167,37 +158,33 @@ public class forumRequest extends HttpServlet {
         // Connect to our database
         Connection conn = null;
         Statement  stmt = null;
-        String SQL_POST = "SELECT * FROM posts JOIN users ON posts.post_id = " + getID + " AND posts.user_id=users.user_id";
-        String SQL_COMMENTS = "SELECT * FROM replies JOIN users ON replies.post_id=" + getID + " AND replies.user_id=users.user_id";
+                
+        Boolean topicDefined = false;
+        
+        String SQL_ALLPOSTS = "";        
+        if(desiredTopic == null)
+             SQL_ALLPOSTS = "SELECT * FROM posts JOIN users ON posts.user_id=users.user_id";
+        else {
+            topicDefined = true;
+            SQL_ALLPOSTS = "SELECT * FROM posts JOIN users ON posts.user_id=users.user_id AND posts.topic=\"" + desiredTopic + "\"";
+        }
+                
         ResultSet rs;
         try{
-            Class.forName("com.mysql.jdbc.Driver"); // Loads a class in by a dynamic string's name vs static naming conventions    
+            Class.forName("com.mysql.jdbc.Driver"); // Loads a class in by a dynamic string's name vs static naming convetntions    
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             stmt = conn.createStatement();
 
             // Get the Post's information
-            rs = stmt.executeQuery(SQL_POST);
+            rs = stmt.executeQuery(SQL_ALLPOSTS);
             while(rs.next()) {
-                // Grab variables & store them
                 foundMatch = true;
-                posterID = rs.getInt("post_id");
-                author = rs.getString("name");
-                title = rs.getString("title");
-                topic = rs.getString("topic");
-                pic = rs.getString("pic");
-                joinDate = (rs.getDate("date_posted")).toString();
-            }
-            
-            // Get the Reply information
-            rs = stmt.executeQuery(SQL_COMMENTS);
-            while(rs.next()) {
-                // Grab variables & store them
-                responderIDs.add(rs.getInt("user_id"));
-                names.add(rs.getString("name"));
-                photoURLs.add(rs.getString("pic"));
-                content.add(rs.getString("content"));
-                time.add((rs.getDate("date_posted")).toString());
-            }
+                posterIDs.add(rs.getInt("post_id"));
+                title.add(rs.getString("title"));
+                topics.add(rs.getString("topic"));
+                author.add(rs.getString("name"));
+                authorPic.add(rs.getString("pic"));
+            }            
         }catch(ClassNotFoundException e) {
             e.getMessage();
             e.printStackTrace();
@@ -218,23 +205,37 @@ public class forumRequest extends HttpServlet {
         
         // If the post idh has no matches then send us to an appropriate page
         if(foundMatch == false) {
-            response.sendRedirect("https://www.lds.org/scriptures/bd/repentance");
+            response.sendRedirect("https://www.lds.org/scriptures/bd/faith");
             return;
         }
             
+
         //     protected String getResponse(String name, String pic, String reply, String date){                
         try (PrintWriter out = response.getWriter()) {
 
             out.println(getHeaderInfo());
-            out.println(getLargeQuestion(author, pic, title, topic, joinDate));
-            out.println(getNewBox());
 
-            if(content.size() == 0)
-                out.println("<h2>No replies have been posted to this question</h2>");
-            for(int i = 0; i < content.size(); i++) 
-                out.println(getResponse(names.get(i), photoURLs.get(i), content.get(i), time.get(i)));                
+                // "<div class=\"commenterImage\">\n" + " <img src=" + pic + "/>"
+            if(topicDefined)
+                out.println("<h2>Posts relating to " + desiredTopic + "</h2>");
+            else
+                out.println("<h2>Recent posts below</h2>");
+                
+            for(int i = 0; i < posterIDs.size(); i++) {
+                out.println("<a href = forumRequest?entry=" + posterIDs.get(i) + ">" + title.get(i) + "</a><br/>" +
+                        "<div class=\"commenterImage\">\n" + " <img src=" + authorPic.get(i) + "></div>" +
+                        "posted by: " + author.get(i) + " " +
+                        "regarding " + "<a href=postListings?topic=" + topics.get(i) + ">" + topics.get(i) + "</a>" +
+                        "<br><br>");
 
-            out.println(getEndNewBox(getID));
+                /*
+                posterIDs.add(rs.getInt("post_id"));
+                title.add(rs.getString("title"));
+                topics.add(rs.getString("topic"));
+                author.add(rs.getString("name"));
+                 */
+                
+            }
             out.println(getEndHTML());
         }
     }

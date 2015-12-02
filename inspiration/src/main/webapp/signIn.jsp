@@ -8,10 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="inspiration.css">
-        <link href="favicon-32x32.png" rel="icon" type="image/ico">
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <jsp:include page="/modules/head.jsp" />
         <title>Inspiration.org</title>
     </head>
     <body>
@@ -19,6 +16,7 @@
         <div class="userInfo">
             <div class="col-md-4"></div>
             <div class="col-md-6">
+<<<<<<< HEAD
                 <h1>Sign in Page</h1><br/>
                 <button class="btn btn-lg btn-primary" onClick="window.location='facebookLogin'" type="button" name="SignUp" id="SignUp">Sign in with Facebook</button>
                 <br/><br/>
@@ -41,7 +39,5 @@
             <div class="col-md-2">
             </div>
         </div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     </body>
 </html>
