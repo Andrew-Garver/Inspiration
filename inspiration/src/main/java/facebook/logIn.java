@@ -21,19 +21,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "logIn", urlPatterns = {"/logIn"})
 public class logIn extends HttpServlet {
-        
-    // JDBC driver name and database URL
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String OS_MYSQL_DB_HOST = getenv("OPENSHIFT_MYSQL_DB_HOST");
-    static final String OS_MYSQL_DB_PORT = getenv("OPENSHIFT_MYSQL_DB_PORT");
-    static final String DB_URL = "jdbc:mysql://" + OS_MYSQL_DB_HOST + ":" + OS_MYSQL_DB_PORT + "/";
-
-    //  Database credentials
-    static final String USER = "adminLGMn6AW";
-    static final String PASS = "Lhh3jeWDXKe1";
-    
-    Statement stmt = null;
-    Connection conn = null;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -87,40 +74,16 @@ public class logIn extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            Class.forName(JDBC_DRIVER);
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            stmt = conn.createStatement();
-            String pass = (String) request.getSession().getAttribute("password");
-            String sql = "";
+        String sql;
             if(request.getSession().getAttribute("email") != null){
                 String email = (String) request.getSession().getAttribute("email");
                 sql = "SELECT user_id FROM users WHERE email = '" + email + "'";
-            } else if(request.getSession().getAttribute("email") != null){
+            } else {
                 String username = (String) request.getSession().getAttribute("username");
                 sql = "SELECT user_id FROM users WHERE username = '" + username + "'";
             }
-            ResultSet rs = stmt.executeQuery(sql);
-        } catch(SQLException se) {
-      //Handle errors for JDBC
-      se.printStackTrace();
-   } catch(Exception e){
-      //Handle errors for Class.forName
-      e.printStackTrace();
-   } finally {
-      //finally block used to close resources
-      try {
-         if(stmt!=null)
-            stmt.close();
-      } catch(SQLException se2) {
-      }// nothing we can do
-      try {
-         if(conn!=null)
-            conn.close();
-      } catch(SQLException se) {
-         se.printStackTrace();
-      }//end finally try
-   }//end try
+            dbConnection db = new dbConnection();
+            ResultSet rs = db.selectQuery(sql);
         
         //processRequest(request, response);
     }
