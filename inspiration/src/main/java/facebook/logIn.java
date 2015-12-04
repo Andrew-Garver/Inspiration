@@ -41,7 +41,7 @@ public class logIn extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet logIn</title>");            
+            out.println("<title>Servlet logIn</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet logIn at " + request.getContextPath() + "</h1>");
@@ -76,24 +76,29 @@ public class logIn extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         String sql;
-        String password = (String) request.getSession().getAttribute("password");
-            if(request.getSession().getAttribute("email") != null){
-                String email = (String) request.getSession().getAttribute("email");
-                sql = "SELECT user_id FROM users WHERE email = '" + email + "' AND password = '" + password + "'";
-            } else {
-                String username = (String) request.getSession().getAttribute("username");
-                sql = "SELECT user_id FROM users WHERE username = '" + username + "' AND password = '" + password + "'";
-            }
-            dbConnection db = new dbConnection();
-            ResultSet rs = db.selectQuery(sql);
-        try {
-            if(rs.next()) {
-                request.getSession().setAttribute("accountId", rs.getInt("user_id"));
-            }
-        } catch(SQLException se) {
-            se.printStackTrace();
+        PrintWriter out = response.getWriter();
+        String password = (String) request.getParameter("password");
+        if (request.getSession().getAttribute("email") != null) {
+            String email = (String) request.getParameter("email");
+            sql = "SELECT user_id FROM users WHERE email = '" + email + "' AND password = '" + password + "'";
+        } else {
+            String username = (String) request.getParameter("username");
+            sql = "SELECT user_id FROM users WHERE username = '" + username + "' AND password = '" + password + "'";
         }
+        dbConnection db = new dbConnection();
+        ResultSet rs = db.selectQuery(sql);
+        try {
+            if (rs.next()) {
+                request.getSession().setAttribute("loggedIn", "true");
+                response.sendRedirect("homepage.jsp");
+            }
+        } catch (Exception se) {
+            out.println("Exception thrown");
+        }
+        response.sendRedirect("https://pbs.twimg.com/media/CJbY2U_UkAAIL6D.jpg");
+
     }
 
     /**

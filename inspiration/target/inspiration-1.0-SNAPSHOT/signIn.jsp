@@ -20,7 +20,7 @@
                 <button class="btn btn-lg btn-primary" onClick="window.location='facebookLogin'" type="button" name="SignUp" id="SignUp">Sign in with Facebook</button>
                 <br/><br/>
                 <h4>Or</h4>
-                <form action="logIn" metho="POST" class="form-inline">
+                <form action="logIn" method="post" class="form-inline">
                     <h3>Sign in With Email or Username</h3>
                     <br/>
                     <label for="email" class="form-label">Email: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
