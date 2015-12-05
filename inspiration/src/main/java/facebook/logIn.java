@@ -109,11 +109,11 @@ public class logIn extends HttpServlet {
                 request.getSession().setAttribute("user_id", rs.getString("user_id"));
                 request.getSession().setAttribute("birth_date", rs.getString("birth_date"));
                 out.println("assigned session vars");
-                Calendar today = Calendar.getInstance();
-                Calendar birth_date = Calendar.getInstance();
-                birth_date.setTime(rs.getDate("birth_date"));
-                int age = today.get(Calendar.YEAR) - birth_date.get(Calendar.YEAR);
-                request.getSession().setAttribute("age", age);
+//                Calendar today = Calendar.getInstance();
+//                Calendar birth_date = Calendar.getInstance();
+//                birth_date.setTime(rs.getDate("birth_date"));
+//                int age = today.get(Calendar.YEAR) - birth_date.get(Calendar.YEAR);
+//                request.getSession().setAttribute("age", age);
                 request.getSession().setAttribute("badLogin", "");
                 response.sendRedirect("homepage.jsp");
             } else {
