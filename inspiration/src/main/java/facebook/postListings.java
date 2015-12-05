@@ -148,12 +148,17 @@ public class postListings extends HttpServlet {
         Vector<String> title = new Vector<>();        
         Vector<String> topics = new Vector<>();        
         Vector<String> author = new Vector<>();        
+        Vector<Integer> karma = new Vector();
+
         Vector<String> authorPic = new Vector<>();        
         
         // Define our constants
         String DB_URL = "jdbc:mysql://localhost/jsp";
         String USER = "adminLGMn6AW";
         String PASS = "Lhh3jeWDXKe1";
+        
+        String relatedPosts = "<h2>Recent posts below</h2>";
+        String posts = "";
         
         // Connect to our database
         Connection conn = null;
@@ -184,6 +189,7 @@ public class postListings extends HttpServlet {
                 topics.add(rs.getString("topic"));
                 author.add(rs.getString("name"));
                 authorPic.add(rs.getString("pic"));
+                karma.add(rs.getInt("karma_total"));
             }            
         }catch(ClassNotFoundException e) {
             e.getMessage();
@@ -211,33 +217,42 @@ public class postListings extends HttpServlet {
             
 
         //     protected String getResponse(String name, String pic, String reply, String date){                
-        try (PrintWriter out = response.getWriter()) {
-
-            out.println(getHeaderInfo());
+//        try (PrintWriter out = response.getWriter()) {
+//
+//            out.println(getHeaderInfo());
 
                 // "<div class=\"commenterImage\">\n" + " <img src=" + pic + "/>"
-            if(topicDefined)
-                out.println("<h2>Posts relating to " + desiredTopic + "</h2>");
-            else
-                out.println("<h2>Recent posts below</h2>");
+            if(topicDefined) {
+                relatedPosts = "<h2>Posts relating to " + desiredTopic + "</h2>";
+            }
                 
             for(int i = 0; i < posterIDs.size(); i++) {
-                out.println("<a href = forumRequest?entry=" + posterIDs.get(i) + ">" + title.get(i) + "</a><br/>" +
+                posts += "<table><td style=\"min-width:82px; max-width:82px\"> \n" +
+                        "<a href=\"postVote?val=up&postID=" +
+                        posterIDs.get(i) +
+                        "\"><img src=\"up.png\"/></a>\n" +
+                        "<a href=\"postVote?val=down&postID=" +
+                        posterIDs.get(i) + 
+                        "\"><img src=\"down.png\"/></a>\n" +
+                        "<span style=\"vertical-align:middle; \">" + 
+                        karma.get(i) + 
+                        "</span>\n" +
+                        "</td>\n" +
+                        "<td>" +
+                        "<a href = forumRequest?entry=" + posterIDs.get(i) + ">" + title.get(i) + "</a><br/>" +
                         "<div class=\"commenterImage\">\n" + " <img src=" + authorPic.get(i) + "></div>" +
                         "posted by: " + author.get(i) + " " +
                         "regarding " + "<a href=postListings?topic=" + topics.get(i) + ">" + topics.get(i) + "</a>" +
-                        "<br><br>");
-
-                /*
-                posterIDs.add(rs.getInt("post_id"));
-                title.add(rs.getString("title"));
-                topics.add(rs.getString("topic"));
-                author.add(rs.getString("name"));
-                 */
+                        "</td>\n</table><br><br>";
                 
             }
-            out.println(getEndHTML());
-        }
+            
+            request.getSession().setAttribute("posts", posts);
+            request.getSession().setAttribute("relatedPosts", relatedPosts);
+            
+            request.getRequestDispatcher("/postListings.jsp").forward(request, response);
+//            out.println(getEndHTML());
+//        }
     }
     
     

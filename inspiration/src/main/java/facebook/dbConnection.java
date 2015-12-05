@@ -19,107 +19,54 @@ import javax.servlet.ServletException;
  * @author cswor
  */
 public class dbConnection {
+        
+    private final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    private String DB_URL;
+    private String USER;
+    private String PASS;
     
-    // JDBC driver name and database URL
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String host = getenv("OPENSHIFT_MYSQL_DB_HOST");
-    static final String port = getenv("OPENSHIFT_MYSQL_DB_PORT");
-    static final String DB_URL = "jdbc:mysql://" + host + ":" + port + "/jsp";
-
-    //  Database credentials
-    static final String USER = "adminLGMn6AW";
-    static final String PASS = "Lhh3jeWDXKe1";
+    // remove opening multi-line comment and adjust vars for local connection
+/*    public void setConnections() {
+        this.setDB_URL("jdbc:mysql://localhost:3306/jsp");
+        this.setUSER("root");
+        this.setPASS("");
+    }   //  */
     
-/*    // Define our constants
-    static final String DB_URL = "jdbc:mysql://localhost:8080/jsp";
-    static final String USER = "root";   //your root username
-    static final String PASS = "";      //your root password    */
-    
-    private Statement stmt = null;
-    private Connection conn = null;
-    private ResultSet rs = null;
+    // remove opening multi-line comment for server connection
+    public void setConnections() {
+        String host = getenv("OPENSHIFT_MYSQL_DB_HOST");
+        String port = getenv("OPENSHIFT_MYSQL_DB_PORT");
+        this.setDB_URL("jdbc:mysql://" + host + ":" + port + "/jsp");
+        this.setUSER("adminLGMn6AW");
+        this.setPASS("Lhh3jeWDXKe1");
+    }   //  */
 
-    public Statement getStmt() {
-        return stmt;
-    }
-
-    public void setStmt(Statement stmt) {
-        this.stmt = stmt;
+    public String getJDBC_DRIVER() {
+        return JDBC_DRIVER;
     }
 
-    public Connection getConn() {
-        return conn;
+    public String getDB_URL() {
+        return DB_URL;
     }
 
-    public void setConn(Connection conn) {
-        this.conn = conn;
+    public void setDB_URL(String DB_URL) {
+        this.DB_URL = DB_URL;
     }
 
-    public ResultSet getRs() {
-        return rs;
+    public String getUSER() {
+        return USER;
     }
 
-    public void setRs(ResultSet rs) {
-        this.rs = rs;
+    public void setUSER(String USER) {
+        this.USER = USER;
     }
-    
-    public ResultSet selectQuery(String query) 
-            throws ServletException, IOException {
-        try {
-            Class.forName(JDBC_DRIVER);
-            this.setConn(DriverManager.getConnection(DB_URL, USER, PASS));
-            this.setStmt(conn.createStatement());
-            this.setRs(stmt.executeQuery(query));
-        } catch(SQLException se) {
-            //Handle errors for JDBC
-            se.printStackTrace();
-        } catch(Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        } finally {
-            //finally block used to close resources
-            try {
-                if(stmt != null)
-                    stmt.close();
-            } catch(SQLException se2) {
-        }// nothing we can do
-            try {
-                if(conn != null)
-                conn.close();
-            } catch(SQLException se) {
-                se.printStackTrace();
-            }//end finally try
-        }//end try
-        return this.rs;
+
+    public String getPASS() {
+        return PASS;
     }
-    
-    public void insertOrDeleteQuery(String query) 
-            throws ServletException, IOException {
-        try {
-            Class.forName(JDBC_DRIVER);
-            this.setConn(DriverManager.getConnection(DB_URL, USER, PASS));
-            this.setStmt(conn.createStatement());
-            stmt.executeQuery(query);
-        } catch(SQLException se) {
-            //Handle errors for JDBC
-            se.printStackTrace();
-        } catch(Exception e){
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        } finally {
-            //finally block used to close resources
-            try {
-                if(stmt != null)
-                    stmt.close();
-            } catch(SQLException se2) {
-        }// nothing we can do
-            try {
-                if(conn != null)
-                conn.close();
-            } catch(SQLException se) {
-                se.printStackTrace();
-            }//end finally try
-        }//end try
+
+    public void setPASS(String PASS) {
+        this.PASS = PASS;
     }
     
 }

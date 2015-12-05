@@ -81,32 +81,80 @@ public class AskQuestion extends HttpServlet {
         
         // Add information to database here.
         String user_id = request.getSession().getAttribute("accountId").toString();
-        String query = "SELECT MAX(post_id) AS id FROM posts";
+        String sql = "SELECT MAX(post_id) AS id FROM posts";
         String post_id = null;
         dbConnection db = new dbConnection();
-        ResultSet rs = db.selectQuery(query);
+        db.setConnections();
+        Statement stmt = null;
+        Connection conn = null;
         try {
+            Class.forName(db.getJDBC_DRIVER());
+            conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
             if(rs.next()) {
                 post_id = rs.getString("user_id");
             }
         } catch(SQLException se) {
+            //Handle errors for JDBC
             se.printStackTrace();
-        }
+        } catch (Exception se) {
+            request.getSession().setAttribute("questionError", "Getting an exception when trying to log in...");
+            response.sendRedirect("askQuestion.jsp");
+        } finally {
+            //finally block used to close resources
+            try {
+                if(stmt != null)
+                    stmt.close();
+            } catch(SQLException se2) {
+            }// nothing we can do
+            try {
+                if(conn != null)
+                    conn.close();
+            } catch(SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+            
         String postTitle = request.getParameter("question_title");
         String postContent = request.getParameter("question_content");
         PrintWriter out = response.getWriter();
         out.println(user_id + " " + post_id + " " + postTitle + " " + postContent);
         
         // Connect to our database
-        Connection conn = null;
-        Statement  stmt = null;
-        String SQL = "INSERT INTO posts (user_id, post_id, title, content) VALUES ("
+        sql = "INSERT INTO posts (user_id, post_id, title, content) VALUES ("
                 + user_id + ", "
                 + post_id + ", "
                 + postTitle + ", "
                 + postContent + ")";
-        db.insertOrDeleteQuery(SQL);
-//        response.sendRedirect("forumRequest?entry=" + post_id); // comment this out to test the data we're posting
+        stmt = null;
+        conn = null;
+        try {
+            Class.forName(db.getJDBC_DRIVER());
+            conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
+            stmt = conn.createStatement();
+            stmt.executeQuery(sql);
+        } catch(SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        } catch (Exception se) {
+            request.getSession().setAttribute("questionError", "Getting an exception when trying to post your question...");
+            response.sendRedirect("askQuestion.jsp");
+        } finally {
+            //finally block used to close resources
+            try {
+                if(stmt != null)
+                    stmt.close();
+            } catch(SQLException se2) {
+            }// nothing we can do
+            try {
+                if(conn != null)
+                    conn.close();
+            } catch(SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        response.sendRedirect("forumRequest?entry=" + post_id); // comment this out to test the data we're posting
     }
 
     /**

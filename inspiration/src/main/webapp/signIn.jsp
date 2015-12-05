@@ -11,7 +11,7 @@
         <jsp:include page="/modules/head.jsp" />
         <title>Inspiration.org</title>
     </head>
-    <body>
+    <body onload="validate()">
         <jsp:include page="/modules/header.jsp" />
         <div class="userInfo">
             <div class="col-md-4"></div>
@@ -20,7 +20,7 @@
                 <button class="btn btn-lg btn-primary" onClick="window.location='facebookLogin'" type="button" name="SignUp" id="SignUp">Sign in with Facebook</button>
                 <br/><br/>
                 <h4>Or</h4>
-                <form action="logIn" method="post" class="form-inline">
+                <form action="logIn" method="POST" class="form-inline">
                     <h3>Sign in With Email or Username</h3>
                     <br/>
                     <label for="email" class="form-label">Email: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
@@ -34,6 +34,7 @@
                     <br/><br/>
                     <input type="submit" class="btn btn-primary btn-lg" value="Log In">
                 </form>
+                    <h3 class="submitError">${badLogin}</h3>
             </div>
             <div class="col-md-2">
             </div>

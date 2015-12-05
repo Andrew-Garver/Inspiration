@@ -3,6 +3,11 @@
     Created on : Nov 21, 2015, 11:51:34 AM
     Author     : Andrew Garver
 --%>
+<%
+    if(session.getAttribute("loggedIn") == null) {
+        response.sendRedirect("homepage.jsp");
+    }
+%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,28 +20,15 @@
         <jsp:include page="/modules/header.jsp" />
         <div class="userInfo">
             <div class="col-md-4">
-                <img class="img-responsive" src="images/defaultUserPic.png" alt="User Profile Picture">
+                <img class="img-responsive" src="${pic}" alt="User Profile Picture">
                 <p class="karma">Karma +234</p>
             </div>
             <div class="col-md-6">
                 <h2><% out.print(session.getAttribute("name")); %></h2>
-                <p> <!-- This should be pulling from the database -->
-                    Lorem ipsum dolor sit amet, maiores ornare ac fermentum, imperdiet ut vivamus a, 
-                    nam lectus at nunc. Quam euismod sem, semper ut potenti pellentesque quisque. In 
-                    eget sapien sed, sit duis vestibulum ultricies, placerat morbi amet vel, nullam in 
-                    in lorem vel. In molestie elit dui dictum, praesent nascetur pulvinar sed, in dolor
-                    pede in aliquam, risus nec error quis pharetra. Eros metus quam augue suspendisse,
-                    metus rutrum risus erat in.  In ultrices quo ut lectus, etiam vestibulum urna a est,
-                    pretium luctus euismod nisl, pellentesque turpis hac ridiculus massa. Venenatis a taciti 
-                    dolor platea, curabitur lorem platea urna odio, convallis sit pellentesque lacus proin. 
-                    Et ipsum velit diam nulla, fringilla vel tincidunt vitae, elit turpis tellus vivamus, 
-                    dictum adipiscing convallis magna id. Viverra eu amet sit, dignissim tincidunt volutpat 
-                    nulla tincidunt, feugiat est erat dui tempor, fusce tortor auctor vestibulum. Venenatis 
-                    praesent risus orci, ante nam volutpat erat. Cursus non mollis interdum maecenas, consequat 
-                    imperdiet penatibus enim, tristique luctus tellus eos accumsan, ridiculus erat laoreet nunc.
-                </p>
-                <p class="userListDetails">Age: <span class="userDetails">37</span></p>
-                <p class="userListDetails">Location:  <span class="userDetails">The Alps</span></p>
+                <p> ${desc}</p>
+                <p class="userListDetails">Birthday: <span class="userDetails">${birth_date}</span></p>
+                <p class="userListDetails">Age: <span class="userDetails">${age}</span></p>
+                <p class="userListDetails">Location:  <span class="userDetails">${loc}</span></p>
                 <p class="userListDetails">Social Media</p>
                 <p class="userListDetails">Web site</p>
             </div>

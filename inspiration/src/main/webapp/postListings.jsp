@@ -9,13 +9,16 @@
 <html>
     <head>
         <jsp:include page="/modules/head.jsp" />
-        <title>Inspiration.org</title>
+        <title>Post Listings</title>
     </head>
     <body>
         <jsp:include page="/modules/header.jsp" />
-        <div class="userInfo">
+        <div>
             <div class="col-md-4"></div>
-            <div class="col-md-6"></div>
+            <div class="col-md-6">
+                ${relatedPosts}
+                ${posts}
+            </div>
             <div class="col-md-2">
                 <form action="#" method="post">
                     <div id="custom-search-input">
