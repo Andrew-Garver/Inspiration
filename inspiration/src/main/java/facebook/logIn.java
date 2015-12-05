@@ -7,15 +7,8 @@ package facebook;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.getenv;
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author cswor
+ * @author csworen
  */
 @WebServlet(name = "logIn", urlPatterns = {"/logIn"})
 public class logIn extends HttpServlet {
@@ -114,16 +107,13 @@ public class logIn extends HttpServlet {
                 request.getSession().setAttribute("pic", rs.getString("pic"));
                 request.getSession().setAttribute("desc", rs.getString("description"));
                 request.getSession().setAttribute("user_id", rs.getString("user_id"));
-//  This line was throwing the error ->    request.getSession().setAttribute("birth_date", new SimpleDateFormat("MM-dd-yyyy").format(rs.getString("birth_date")));
+                request.getSession().setAttribute("birth_date", rs.getString("birth_date"));
                 out.println("assigned session vars");
-//                Calendar today = Calendar.getInstance();
-//                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//                Calendar birth_date = Calendar.getInstance();
-//                birth_date.setTime(rs.getDate("birth_date"));
-//                request.getSession().setAttribute("birth_date", birth_date);
-//                int age = today.get(Calendar.YEAR) - birth_date.get(Calendar.YEAR);
-//                request.getSession().setAttribute("age", age);
-//>>>>>>> e0c03638dbb50c1bf87ca514b2a0236b8ea507ec
+                Calendar today = Calendar.getInstance();
+                Calendar birth_date = Calendar.getInstance();
+                birth_date.setTime(rs.getDate("birth_date"));
+                int age = today.get(Calendar.YEAR) - birth_date.get(Calendar.YEAR);
+                request.getSession().setAttribute("age", age);
                 request.getSession().setAttribute("badLogin", "");
                 response.sendRedirect("homepage.jsp");
             } else {

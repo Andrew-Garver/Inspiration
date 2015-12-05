@@ -157,22 +157,20 @@ public class forumRequest extends HttpServlet {
         Vector<String> names = new Vector<>();        
         Vector<String> photoURLs = new Vector<>();        
         Vector<String> content = new Vector<>();        
-        Vector<String> time = new Vector<>();        
+        Vector<String> time = new Vector<>();  
         
-        // Define our constants
-        String DB_URL = "jdbc:mysql://localhost/jsp";
-        String USER = "adminLGMn6AW";
-        String PASS = "Lhh3jeWDXKe1";
-        
-        // Connect to our database
-        Connection conn = null;
-        Statement  stmt = null;
         String SQL_POST = "SELECT * FROM posts JOIN users ON posts.post_id = " + getID + " AND posts.user_id=users.user_id";
         String SQL_COMMENTS = "SELECT * FROM replies JOIN users ON replies.post_id=" + getID + " AND replies.user_id=users.user_id";
+        
+        dbConnection db = new dbConnection();
+        db.setConnections();
+
+        Statement stmt = null;
+        Connection conn = null;
         ResultSet rs;
-        try{
-            Class.forName("com.mysql.jdbc.Driver"); // Loads a class in by a dynamic string's name vs static naming conventions    
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        try {
+            Class.forName(db.getJDBC_DRIVER()); // Loads a class in by a dynamic string's name vs static naming convetntions    
+            conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
             stmt = conn.createStatement();
 
             // Get the Post's information
@@ -198,22 +196,23 @@ public class forumRequest extends HttpServlet {
                 content.add(rs.getString("content"));
                 time.add((rs.getDate("date_posted")).toString());
             }
-        }catch(ClassNotFoundException e) {
+        } catch(ClassNotFoundException e) {
             e.getMessage();
             e.printStackTrace();
-        }catch(Exception d) {
+        } catch(Exception d) {
             d.printStackTrace();
-        }finally{ // Clean up! Clean up! Everybody clean up!
-            try{
+        } finally { // Clean up! Clean up! Everybody clean up!
+            try {
                 if(stmt != null)
-                    stmt.close();}
-                catch(Exception se){ 
-                    se.printStackTrace();}
-            try{
+                    stmt.close();
+            } catch(Exception se) {
+                    se.printStackTrace();
+            } try {
                 if(conn != null)
-                    conn.close();}
-                catch(Exception se) {
-                    se.printStackTrace();}
+                    conn.close();
+            } catch(Exception se) {
+                    se.printStackTrace();
+            }
         }
         
         // If the post idh has no matches then send us to an appropriate page
