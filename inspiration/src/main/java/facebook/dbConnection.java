@@ -32,7 +32,7 @@ public class dbConnection {
     
 /*    // Define our constants
     static final String DB_URL = "jdbc:mysql://localhost:8080/jsp";
-    static final String USER = "root"   //your root username
+    static final String USER = "root";   //your root username
     static final String PASS = "";      //your root password    */
     
     private Statement stmt = null;
