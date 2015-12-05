@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -109,16 +110,20 @@ public class logIn extends HttpServlet {
             if (rs.next()) {
                 out.println("Connected to db");
                 request.getSession().setAttribute("loggedIn", "true");
-                request.getSession().setAttribute("name", rs.getString("name"));
+                request.getSession().setAttribute("name", rs.getString("username"));
                 request.getSession().setAttribute("pic", rs.getString("pic"));
-                request.getSession().setAttribute("desc", rs.getString("desc"));
+                request.getSession().setAttribute("desc", rs.getString("description"));
                 request.getSession().setAttribute("user_id", rs.getString("user_id"));
 //  This line was throwing the error ->    request.getSession().setAttribute("birth_date", new SimpleDateFormat("MM-dd-yyyy").format(rs.getString("birth_date")));
                 out.println("assigned session vars");
-//                LocalDate now = LocalDate.now();
-//                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
-//                LocalDate birth_date = LocalDate.parse(rs.getString("birth_date"), formatter);
-//                Period age = Period.between(birth_date, now);
+//                Calendar today = Calendar.getInstance();
+//                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//                Calendar birth_date = Calendar.getInstance();
+//                birth_date.setTime(rs.getDate("birth_date"));
+//                request.getSession().setAttribute("birth_date", birth_date);
+//                int age = today.get(Calendar.YEAR) - birth_date.get(Calendar.YEAR);
+//                request.getSession().setAttribute("age", age);
+//>>>>>>> e0c03638dbb50c1bf87ca514b2a0236b8ea507ec
                 request.getSession().setAttribute("badLogin", "");
                 response.sendRedirect("homepage.jsp");
             } else {
@@ -133,6 +138,7 @@ public class logIn extends HttpServlet {
         } catch (Exception se) {
             out.println("exception thrown std");
             request.getSession().setAttribute("badLogin", "Getting an exception when trying to log in...");
+            se.printStackTrace();
             response.sendRedirect("signIn.jsp");
         } finally {
             //finally block used to close resources
