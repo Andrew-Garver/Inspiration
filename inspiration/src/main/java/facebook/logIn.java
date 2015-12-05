@@ -9,6 +9,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.getenv;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -78,6 +82,7 @@ public class logIn extends HttpServlet {
             throws ServletException, IOException {
 
         String sql;
+        request.getSession().setAttribute("badLogin", "Invalid login credentials");
         PrintWriter out = response.getWriter();
         String password = (String) request.getParameter("password");
         if (request.getSession().getAttribute("email") != null) {
@@ -85,20 +90,54 @@ public class logIn extends HttpServlet {
             sql = "SELECT user_id FROM users WHERE email = '" + email + "' AND password = '" + password + "'";
         } else {
             String username = (String) request.getParameter("username");
-            sql = "SELECT user_id FROM users WHERE username = '" + username + "' AND password = '" + password + "'";
+            sql = "SELECT * FROM users WHERE username = '" + username + "' AND password = '" + password + "'";
         }
         dbConnection db = new dbConnection();
-        ResultSet rs = db.selectQuery(sql);
+        db.setConnections();
+        Statement stmt = null;
+        Connection conn = null;
+        ResultSet rs;
         try {
+            Class.forName(db.getJDBC_DRIVER());
+            conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 request.getSession().setAttribute("loggedIn", "true");
+                request.getSession().setAttribute("name", rs.getString("name"));
+                request.getSession().setAttribute("pic", rs.getString("pic"));
+                request.getSession().setAttribute("desc", rs.getString("desc"));
+                request.getSession().setAttribute("birth_date", new SimpleDateFormat("MM-dd-yyyy").format(rs.getString("birth_date")));
+                LocalDate now = LocalDate.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate birth_date = LocalDate.parse(rs.getString("birth_date"), formatter);
+                Period age = Period.between(birth_date, now);
+                request.getSession().setAttribute("badLogin", "");
                 response.sendRedirect("homepage.jsp");
+            } else {
+                request.setAttribute("badLogin", "Invalid login credentials");
+                response.sendRedirect("signIn.jsp");
             }
+        } catch(SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
         } catch (Exception se) {
-            out.println("Exception thrown");
-        }
-        response.sendRedirect("https://pbs.twimg.com/media/CJbY2U_UkAAIL6D.jpg");
-
+            request.getSession().setAttribute("badLogin", "Getting an exception when trying to log in...");
+            response.sendRedirect("signIn.jsp");
+        } finally {
+            //finally block used to close resources
+            try {
+                if(stmt != null)
+                    stmt.close();
+            } catch(SQLException se2) {
+        }// nothing we can do
+            try {
+                if(conn != null)
+                conn.close();
+            } catch(SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
     }
 
     /**

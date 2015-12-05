@@ -47,6 +47,7 @@
                         </div>
                     </div>
                 </form>
+                <h3 class="submitError">${questionError}</h3>
                 <jsp:include page="/modules/sectionListings.jsp" />
             </div>
         </div>
