@@ -150,38 +150,34 @@ public class postListings extends HttpServlet {
         Vector<String> author = new Vector<>();        
         Vector<Integer> karma = new Vector();
 
-        Vector<String> authorPic = new Vector<>();        
-        
-        // Define our constants
-        String DB_URL = "jdbc:mysql://localhost/jsp";
-        String USER = "adminLGMn6AW";
-        String PASS = "Lhh3jeWDXKe1";
+        Vector<String> authorPic = new Vector<>(); 
         
         String relatedPosts = "<h2>Recent posts below</h2>";
         String posts = "";
-        
-        // Connect to our database
-        Connection conn = null;
-        Statement  stmt = null;
                 
         Boolean topicDefined = false;
         
-        String SQL_ALLPOSTS = "";        
+        String sql;        
         if(desiredTopic == null)
-             SQL_ALLPOSTS = "SELECT * FROM posts JOIN users ON posts.user_id=users.user_id";
+             sql = "SELECT * FROM posts JOIN users ON posts.user_id=users.user_id";
         else {
             topicDefined = true;
-            SQL_ALLPOSTS = "SELECT * FROM posts JOIN users ON posts.user_id=users.user_id AND posts.topic=\"" + desiredTopic + "\"";
+            sql = "SELECT * FROM posts JOIN users ON posts.user_id=users.user_id AND posts.topic=\"" + desiredTopic + "\"";
         }
-                
+        
+        dbConnection db = new dbConnection();
+        db.setConnections();
+
+        Statement stmt = null;
+        Connection conn = null;
         ResultSet rs;
-        try{
-            Class.forName("com.mysql.jdbc.Driver"); // Loads a class in by a dynamic string's name vs static naming convetntions    
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        try {
+            Class.forName(db.getJDBC_DRIVER()); // Loads a class in by a dynamic string's name vs static naming convetntions    
+            conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
             stmt = conn.createStatement();
 
             // Get the Post's information
-            rs = stmt.executeQuery(SQL_ALLPOSTS);
+            rs = stmt.executeQuery(sql);
             while(rs.next()) {
                 foundMatch = true;
                 posterIDs.add(rs.getInt("post_id"));
@@ -191,22 +187,23 @@ public class postListings extends HttpServlet {
                 authorPic.add(rs.getString("pic"));
                 karma.add(rs.getInt("karma_total"));
             }            
-        }catch(ClassNotFoundException e) {
+        } catch(ClassNotFoundException e) {
             e.getMessage();
             e.printStackTrace();
-        }catch(Exception d) {
+        } catch(Exception d) {
             d.printStackTrace();
-        }finally{ // Clean up! Clean up! Everybody clean up!
-            try{
+        } finally { // Clean up! Clean up! Everybody clean up!
+            try {
                 if(stmt != null)
-                    stmt.close();}
-                catch(Exception se){ 
-                    se.printStackTrace();}
-            try{
+                    stmt.close();
+            } catch(Exception se) { 
+                    se.printStackTrace();
+            } try {
                 if(conn != null)
-                    conn.close();}
-                catch(Exception se) {
-                    se.printStackTrace();}
+                    conn.close();
+            } catch(Exception se) {
+                    se.printStackTrace();
+            }
         }
         
         // If the post idh has no matches then send us to an appropriate page

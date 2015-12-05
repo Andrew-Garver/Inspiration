@@ -73,16 +73,6 @@ public class replyVote extends HttpServlet {
         String authorID = ""; // We look up this value
         String replyNumber= request.getParameter("replyID");
         String vote = request.getParameter("val");
-        
-        // Define our constants
-        String DB_URL = "jdbc:mysql://localhost/jsp";
-        String USER = "adminLGMn6AW";
-        String PASS = "Lhh3jeWDXKe1";
-        
-        
-        // Connect to our database
-        Connection conn = null;
-        Statement  stmt = null;
                 
         Integer vote_id = -1;
         
@@ -91,12 +81,17 @@ public class replyVote extends HttpServlet {
 
         // Lookup the vote information
         String previousVote = "NO VOTE";
-        String previousVoteSQL = "SELECT * FROM reply_votes WHERE reply_id=" + replyNumber + " AND user_id="+ voterID;
+        String previousVoteSQL = "SELECT * FROM reply_votes WHERE reply_id=" + replyNumber + " AND user_id="+ voterID;        
         
+        dbConnection db = new dbConnection();
+        db.setConnections();
+
+        Statement stmt = null;
+        Connection conn = null;
         ResultSet rs;
-        try{
-            Class.forName("com.mysql.jdbc.Driver"); // Loads a class in by a dynamic string's name vs static naming convetntions    
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
             stmt = conn.createStatement();
 
             // Get the Author's id
@@ -119,8 +114,10 @@ public class replyVote extends HttpServlet {
             stmt = conn.createStatement();
             if(previousVote.equals("NO VOTE")) { // First time casting a vote on this reply
                 String dif ="+ 1";
-                if(vote.equals("down"))
+                
+                if(vote.equals("down")) {
                     dif="- 1";
+                }
                 
                 String addRowSQL = "INSERT INTO reply_votes (reply_id, user_id, vote) VALUES (" + replyNumber + ", " + voterID + ", \"" + vote + "\")";
                 String updateReplyKarmaSQL = "UPDATE replies SET karma_total=karma_total" + dif + " WHERE reply_id=" + replyNumber;
@@ -145,22 +142,23 @@ public class replyVote extends HttpServlet {
                 stmt.executeUpdate(updateReplyKarmaSQL);
                 stmt.executeUpdate(updateUserKarmaSQL);
             }            
-        }catch(ClassNotFoundException e) {            
+        } catch(ClassNotFoundException e) {            
             e.getMessage();
             e.printStackTrace();
-        }catch(Exception d) {
+        } catch(Exception d) {
             d.printStackTrace();
-        }finally{ // Clean up! Clean up! Everybody clean up!
-            try{
+        } finally { // Clean up! Clean up! Everybody clean up!
+            try {
                 if(stmt != null)
-                    stmt.close();}
-                catch(Exception se){ 
-                    se.printStackTrace();}
-            try{
+                    stmt.close();
+            } catch(Exception se) { 
+                    se.printStackTrace();
+            } try {
                 if(conn != null)
-                    conn.close();}
-                catch(Exception se) {
-                    se.printStackTrace();}
+                    conn.close();
+            } catch(Exception se) {
+                    se.printStackTrace();
+            }
         }
         // Send the user back to the previous page they were on
         response.sendRedirect(referer);

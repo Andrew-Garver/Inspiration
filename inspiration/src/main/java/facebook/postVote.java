@@ -72,16 +72,6 @@ public class postVote extends HttpServlet {
         String authorID = "";  
         String postNumber= request.getParameter("postID");
         String vote = request.getParameter("val");
-        
-        // Define our constants
-        String DB_URL = "jdbc:mysql://localhost/jsp";
-        String USER = "adminLGMn6AW";
-        String PASS = "Lhh3jeWDXKe1";
-        
-        
-        // Connect to our database
-        Connection conn = null;
-        Statement  stmt = null;
                 
         Integer vote_id = -1;
 
@@ -91,13 +81,17 @@ public class postVote extends HttpServlet {
         // Lookup the vote status
         String previousVote = "NO VOTE";
         String previousVoteSQL = "SELECT * FROM post_votes WHERE post_id=" + postNumber + " AND user_id="+ voterID;
-                        
-        ResultSet rs;
-        try{
-            Class.forName("com.mysql.jdbc.Driver"); // Loads a class in by a dynamic string's name vs static naming convetntions    
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            stmt = conn.createStatement();
+        
+        dbConnection db = new dbConnection();
+        db.setConnections();
 
+        Statement stmt = null;
+        Connection conn = null;
+        ResultSet rs;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
+            stmt = conn.createStatement();
 
             // Get the Author's id
             rs = stmt.executeQuery(postAuthorSQL);
@@ -112,16 +106,17 @@ public class postVote extends HttpServlet {
             if(rs.next()) {
                 previousVote = rs.getString("vote");
                 vote_id = rs.getInt("post_votes_id");
-            }            
-
+            }
                         
             // Reset the statment data
             stmt.close();
             stmt = conn.createStatement();
             if(previousVote.equals("NO VOTE")) { // First time casting a vote on this post
                 String dif ="+ 1";
-                if(vote.equals("down"))
+                
+                if(vote.equals("down")) {
                     dif="- 1";
+                }
                 
                 String addRowSQL = "INSERT INTO post_votes (post_id, user_id, vote) VALUES (" + postNumber + ", " + voterID + ", \"" + vote + "\")";       
                 String updatepostKarmaSQL = "UPDATE posts SET karma_total=karma_total" + dif + " WHERE post_id=" + postNumber;
@@ -130,11 +125,9 @@ public class postVote extends HttpServlet {
                 stmt.executeUpdate(addRowSQL);
                 stmt.executeUpdate(updatepostKarmaSQL);
                 stmt.executeUpdate(updateUserKarmaSQL);
-            }
-            else if(previousVote.equals(vote)) { // Vote is the same as before
+            } else if(previousVote.equals(vote)) { // Vote is the same as before
                 ; // Do nothing
-            }
-            else { // This is a different vote from the one previously made
+            } else { // This is a different vote from the one previously made
                 String dif ="+ 1";
                 if(vote.equals("down"))
                     dif="- 1";
@@ -146,22 +139,23 @@ public class postVote extends HttpServlet {
                 stmt.executeUpdate(updatepostKarmaSQL);
                 stmt.executeUpdate(updateUserKarmaSQL);
             }            
-        }catch(ClassNotFoundException e) {            
+        } catch(ClassNotFoundException e) {            
             e.getMessage();
             e.printStackTrace();
-        }catch(Exception d) {
+        } catch(Exception d) {
             d.printStackTrace();
-        }finally{ // Clean up! Clean up! Everybody clean up!
-            try{
+        } finally{ // Clean up! Clean up! Everybody clean up!
+            try {
                 if(stmt != null)
-                    stmt.close();}
-                catch(Exception se){ 
-                    se.printStackTrace();}
-            try{
+                    stmt.close();
+            } catch(Exception se) {
+                    se.printStackTrace();
+            } try {
                 if(conn != null)
-                    conn.close();}
-                catch(Exception se) {
-                    se.printStackTrace();}
+                    conn.close();
+            } catch(Exception se) {
+                    se.printStackTrace();
+            }
         }
         // Send the user back to the previous page they were on
         response.sendRedirect(referer);

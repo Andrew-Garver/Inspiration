@@ -150,27 +150,48 @@ public class forumRequest extends HttpServlet {
         String topic = "UNDEFINED";
         String pic = "UNDEFINED";
         String joinDate = "UNDEFINED";
-
-        Vector<Integer> responderIDs = new Vector<>();
-        Vector<String> names = new Vector<>();
-        Vector<String> photoURLs = new Vector<>();
-        Vector<String> content = new Vector<>();
-        Vector<String> time = new Vector<>();
-
-        // Define our constants
-        String DB_URL = "jdbc:mysql://localhost/jsp";
-        String USER = "adminLGMn6AW";
-        String PASS = "Lhh3jeWDXKe1";
-
-        // Connect to our database
-        Connection conn = null;
-        Statement stmt = null;
+//<<<<<<< HEAD
+//
+//        Vector<Integer> responderIDs = new Vector<>();
+//        Vector<String> names = new Vector<>();
+//        Vector<String> photoURLs = new Vector<>();
+//        Vector<String> content = new Vector<>();
+//        Vector<String> time = new Vector<>();
+//
+//        // Define our constants
+//        String DB_URL = "jdbc:mysql://localhost/jsp";
+//        String USER = "adminLGMn6AW";
+//        String PASS = "Lhh3jeWDXKe1";
+//
+//        // Connect to our database
+//        Connection conn = null;
+//        Statement stmt = null;
+//=======
+        
+        Vector<Integer> responderIDs = new Vector<>();        
+        Vector<String> names = new Vector<>();        
+        Vector<String> photoURLs = new Vector<>();        
+        Vector<String> content = new Vector<>();        
+        Vector<String> time = new Vector<>();  
+        
+//>>>>>>> b0e6ccf9f4359ae32aa797b9d4023c93f1a2314a
         String SQL_POST = "SELECT * FROM posts JOIN users ON posts.post_id = " + getID + " AND posts.user_id=users.user_id";
         String SQL_COMMENTS = "SELECT * FROM replies JOIN users ON replies.post_id=" + getID + " AND replies.user_id=users.user_id";
+        
+        dbConnection db = new dbConnection();
+        db.setConnections();
+
+        Statement stmt = null;
+        Connection conn = null;
         ResultSet rs;
         try {
-            Class.forName("com.mysql.jdbc.Driver"); // Loads a class in by a dynamic string's name vs static naming conventions    
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+//<<<<<<< HEAD
+//            Class.forName("com.mysql.jdbc.Driver"); // Loads a class in by a dynamic string's name vs static naming conventions    
+//            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+//=======
+            Class.forName(db.getJDBC_DRIVER()); // Loads a class in by a dynamic string's name vs static naming convetntions    
+            conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
+//>>>>>>> b0e6ccf9f4359ae32aa797b9d4023c93f1a2314a
             stmt = conn.createStatement();
 
             // Get the Post's information
@@ -196,25 +217,44 @@ public class forumRequest extends HttpServlet {
                 content.add(rs.getString("content"));
                 time.add((rs.getDate("date_posted")).toString());
             }
-        } catch (ClassNotFoundException e) {
+//<<<<<<< HEAD
+//        } catch (ClassNotFoundException e) {
+//            e.getMessage();
+//            e.printStackTrace();
+//        } catch (Exception d) {
+//            d.printStackTrace();
+//        } finally { // Clean up! Clean up! Everybody clean up!
+//            try {
+//                if (stmt != null) {
+//                    stmt.close();
+//                }
+//            } catch (Exception se) {
+//                se.printStackTrace();
+//            }
+//            try {
+//                if (conn != null) {
+//                    conn.close();
+//                }
+//            } catch (Exception se) {
+//                se.printStackTrace();
+//=======
+        } catch(ClassNotFoundException e) {
             e.getMessage();
             e.printStackTrace();
-        } catch (Exception d) {
+        } catch(Exception d) {
             d.printStackTrace();
         } finally { // Clean up! Clean up! Everybody clean up!
             try {
-                if (stmt != null) {
+                if(stmt != null)
                     stmt.close();
-                }
-            } catch (Exception se) {
-                se.printStackTrace();
-            }
-            try {
-                if (conn != null) {
+            } catch(Exception se) {
+                    se.printStackTrace();
+            } try {
+                if(conn != null)
                     conn.close();
-                }
-            } catch (Exception se) {
-                se.printStackTrace();
+            } catch(Exception se) {
+                    se.printStackTrace();
+//>>>>>>> b0e6ccf9f4359ae32aa797b9d4023c93f1a2314a
             }
         }
 
