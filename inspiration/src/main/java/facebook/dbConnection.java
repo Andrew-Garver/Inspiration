@@ -26,20 +26,20 @@ public class dbConnection {
     private String PASS;
     
     // remove opening multi-line comment and adjust vars for local connection
-/*    public void setConnections() {
-        this.setDB_URL("jdbc:mysql://localhost:3306/jsp");
-        this.setUSER("root");
-        this.setPASS("");
-    }   //  */
+    public void setConnections() {
+        this.DB_URL = "jdbc:mysql://localhost/jsp";
+        this.USER = "adminLGMn6AW";
+        this.PASS = "Lhh3jeWDXKe1";
+    }     
     
     // remove opening multi-line comment for server connection
-    public void setConnections() {
-        String host = getenv("OPENSHIFT_MYSQL_DB_HOST");
-        String port = getenv("OPENSHIFT_MYSQL_DB_PORT");
-        this.setDB_URL("jdbc:mysql://" + host + ":" + port + "/jsp");
-        this.setUSER("adminLGMn6AW");
-        this.setPASS("Lhh3jeWDXKe1");
-    }   //  */
+//    public void setConnections() {
+//        String host = getenv("OPENSHIFT_MYSQL_DB_HOST");
+//        String port = getenv("OPENSHIFT_MYSQL_DB_PORT");
+//        this.setDB_URL("jdbc:mysql://" + host + ":" + port + "/jsp");
+//        this.setUSER("adminLGMn6AW");
+//        this.setPASS("Lhh3jeWDXKe1");
+//    }   
 
     public String getJDBC_DRIVER() {
         return JDBC_DRIVER;

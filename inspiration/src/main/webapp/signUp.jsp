@@ -17,7 +17,7 @@
             <div style="width:500px;margin:auto auto;">
                 <div class="well form-group form-group-sm">  
                     <button onClick="window.location.href='facebookLogin'"  type="button" class="btn btn-primary" name="SignUp" id="SignUp">Login with Facebook</button><br><br>
-                    <form>
+                    <form action="SignUp" method="post">
                         <h4>Or, create an account below using your email</h4>
                         <div class="row">
                             <div class="col-md-5">

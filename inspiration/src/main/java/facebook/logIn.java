@@ -85,56 +85,68 @@ public class logIn extends HttpServlet {
         request.getSession().setAttribute("badLogin", "Invalid login credentials");
         PrintWriter out = response.getWriter();
         String password = (String) request.getParameter("password");
-        if (request.getSession().getAttribute("email") != null) {
+        out.println(password);
+        if (request.getParameter("email") != null) {
             String email = (String) request.getParameter("email");
-            sql = "SELECT user_id FROM users WHERE email = '" + email + "' AND password = '" + password + "'";
+            out.println(email);
+            sql = "SELECT * FROM users WHERE email = '" + email + "' AND password = '" + password + "'";
         } else {
             String username = (String) request.getParameter("username");
+            out.println(username);
             sql = "SELECT * FROM users WHERE username = '" + username + "' AND password = '" + password + "'";
         }
         dbConnection db = new dbConnection();
         db.setConnections();
+
         Statement stmt = null;
         Connection conn = null;
         ResultSet rs;
         try {
-            Class.forName(db.getJDBC_DRIVER());
+            Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             if (rs.next()) {
+                out.println("Connected to db");
                 request.getSession().setAttribute("loggedIn", "true");
                 request.getSession().setAttribute("name", rs.getString("name"));
                 request.getSession().setAttribute("pic", rs.getString("pic"));
                 request.getSession().setAttribute("desc", rs.getString("desc"));
-                request.getSession().setAttribute("birth_date", new SimpleDateFormat("MM-dd-yyyy").format(rs.getString("birth_date")));
-                LocalDate now = LocalDate.now();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate birth_date = LocalDate.parse(rs.getString("birth_date"), formatter);
-                Period age = Period.between(birth_date, now);
+                request.getSession().setAttribute("user_id", rs.getString("user_id"));
+//  This line was throwing the error ->    request.getSession().setAttribute("birth_date", new SimpleDateFormat("MM-dd-yyyy").format(rs.getString("birth_date")));
+                out.println("assigned session vars");
+//                LocalDate now = LocalDate.now();
+//                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
+//                LocalDate birth_date = LocalDate.parse(rs.getString("birth_date"), formatter);
+//                Period age = Period.between(birth_date, now);
                 request.getSession().setAttribute("badLogin", "");
                 response.sendRedirect("homepage.jsp");
             } else {
+                out.println("creds wrong");
                 request.setAttribute("badLogin", "Invalid login credentials");
                 response.sendRedirect("signIn.jsp");
             }
-        } catch(SQLException se) {
+        } catch (SQLException se) {
             //Handle errors for JDBC
+            out.println("Could not connect to db");
             se.printStackTrace();
         } catch (Exception se) {
+            out.println("exception thrown std");
             request.getSession().setAttribute("badLogin", "Getting an exception when trying to log in...");
             response.sendRedirect("signIn.jsp");
         } finally {
             //finally block used to close resources
             try {
-                if(stmt != null)
+                if (stmt != null) {
                     stmt.close();
-            } catch(SQLException se2) {
-        }// nothing we can do
+                }
+            } catch (SQLException se2) {
+            }// nothing we can do
             try {
-                if(conn != null)
-                conn.close();
-            } catch(SQLException se) {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException se) {
                 se.printStackTrace();
             }//end finally try
         }//end try

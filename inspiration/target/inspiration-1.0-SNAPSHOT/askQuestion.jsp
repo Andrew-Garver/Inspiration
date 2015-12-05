@@ -24,8 +24,11 @@
                             <!-- This list should pull from the database. -->
                             <option>Mathematics</option>
                             <option>Literature</option>
-                            <option>etc.</option>
-                            <option>etc..</option>
+                            <option>Economics</option>
+                            <option>Homemaking</option>
+                            <option>Computer Science</option>
+                            <option>Web Design</option>
+                            <option>Athletics</option>
                         </select>
                     </div>
                     <br>
