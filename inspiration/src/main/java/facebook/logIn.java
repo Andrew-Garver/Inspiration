@@ -107,11 +107,12 @@ public class logIn extends HttpServlet {
                 request.getSession().setAttribute("name", rs.getString("name"));
                 request.getSession().setAttribute("pic", rs.getString("pic"));
                 request.getSession().setAttribute("desc", rs.getString("desc"));
-                request.getSession().setAttribute("birth_date", new SimpleDateFormat("MM-dd-yyyy").format(rs.getString("birth_date")));
+                request.getSession().setAttribute("birth_date", new SimpleDateFormat("MM-dd-yyyy").format(rs.getDate("birth_date")));
                 LocalDate now = LocalDate.now();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 LocalDate birth_date = LocalDate.parse(rs.getString("birth_date"), formatter);
-                Period age = Period.between(birth_date, now);
+                Period p = Period.between(birth_date, now);
+                request.getSession().setAttribute("age", p.getYears());
                 request.getSession().setAttribute("badLogin", "");
                 response.sendRedirect("homepage.jsp");
             } else {
@@ -123,6 +124,7 @@ public class logIn extends HttpServlet {
             se.printStackTrace();
         } catch (Exception se) {
             request.getSession().setAttribute("badLogin", "Getting an exception when trying to log in...");
+            se.printStackTrace();
             response.sendRedirect("signIn.jsp");
         } finally {
             //finally block used to close resources
