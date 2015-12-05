@@ -1,36 +1,23 @@
 <%-- 
-    Document   : viewProfile
-    Created on : Nov 21, 2015, 11:51:34 AM
+    Document   : homepage
+    Created on : Nov 21, 2015, 1:53:27 PM
     Author     : Andrew Garver
 --%>
-<%
-    if(session.getAttribute("loggedIn") == null) {
-        response.sendRedirect("homepage.jsp");
-    }
-%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <jsp:include page="/modules/head.jsp" />
-        <title>View Profile</title>
+        <title>Post Listings</title>
     </head>
     <body>
         <jsp:include page="/modules/header.jsp" />
-        <div class="userInfo">
-            <div class="col-md-4">
-                <img class="img-responsive" src="${pic}" alt="User Profile Picture">
-                <p class="karma">Karma +234</p>
-            </div>
+        <div>
+            <div class="col-md-4"></div>
             <div class="col-md-6">
-                <h2><% out.print(session.getAttribute("name")); %></h2>
-                <p> ${desc}</p>
-                <p class="userListDetails">Birthday: <span class="userDetails">${birth_date}</span></p>
-                <p class="userListDetails">Age: <span class="userDetails">${age.getYears()}</span></p>
-                <p class="userListDetails">Location:  <span class="userDetails">${loc}</span></p>
-                <p class="userListDetails">Social Media</p>
-                <p class="userListDetails">Web site</p>
+                ${relatedPosts}
+                ${posts}
             </div>
             <div class="col-md-2">
                 <form action="#" method="post">

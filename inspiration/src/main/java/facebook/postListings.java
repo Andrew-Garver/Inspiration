@@ -155,6 +155,9 @@ public class postListings extends HttpServlet {
         String USER = "adminLGMn6AW";
         String PASS = "Lhh3jeWDXKe1";
         
+        String relatedPosts = "<h2>Recent posts below</h2>";
+        String posts = "";
+        
         // Connect to our database
         Connection conn = null;
         Statement  stmt = null;
@@ -211,22 +214,21 @@ public class postListings extends HttpServlet {
             
 
         //     protected String getResponse(String name, String pic, String reply, String date){                
-        try (PrintWriter out = response.getWriter()) {
-
-            out.println(getHeaderInfo());
+//        try (PrintWriter out = response.getWriter()) {
+//
+//            out.println(getHeaderInfo());
 
                 // "<div class=\"commenterImage\">\n" + " <img src=" + pic + "/>"
-            if(topicDefined)
-                out.println("<h2>Posts relating to " + desiredTopic + "</h2>");
-            else
-                out.println("<h2>Recent posts below</h2>");
+            if(topicDefined) {
+                relatedPosts = "<h2>Posts relating to " + desiredTopic + "</h2>";
+            }
                 
             for(int i = 0; i < posterIDs.size(); i++) {
-                out.println("<a href = forumRequest?entry=" + posterIDs.get(i) + ">" + title.get(i) + "</a><br/>" +
+                posts += "<a href = forumRequest?entry=" + posterIDs.get(i) + ">" + title.get(i) + "</a><br/>" +
                         "<div class=\"commenterImage\">\n" + " <img src=" + authorPic.get(i) + "></div>" +
                         "posted by: " + author.get(i) + " " +
                         "regarding " + "<a href=postListings?topic=" + topics.get(i) + ">" + topics.get(i) + "</a>" +
-                        "<br><br>");
+                        "<br><br>";
 
                 /*
                 posterIDs.add(rs.getInt("post_id"));
@@ -236,8 +238,13 @@ public class postListings extends HttpServlet {
                  */
                 
             }
-            out.println(getEndHTML());
-        }
+            
+            request.getSession().setAttribute("posts", posts);
+            request.getSession().setAttribute("relatedPosts", relatedPosts);
+            
+            request.getRequestDispatcher("/postListings.jsp").forward(request, response);
+//            out.println(getEndHTML());
+//        }
     }
     
     
