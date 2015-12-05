@@ -104,6 +104,11 @@ div.panel {
     margin-bottom: 1px;
     text-align: left;
 }
+.topicsList p a img.sectionIcons {
+    height: 25px;
+    margin-right: 8px;
+    margin-top:-4px;
+}
 .topicsList p a:hover {
     box-shadow: inset 800px 0 rgba(0,0,0,0.2);
 }
