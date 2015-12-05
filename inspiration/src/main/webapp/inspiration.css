@@ -14,7 +14,10 @@ a.aboutInspiration {
 a.siteRules {
     padding-left:10px;
 }
-
+div.topLinks {
+    border-bottom: 1px solid #EEEEEE;
+    padding-bottom: 10px;
+}
 a.title {
     margin-top: 5%;
     margin-left: 4%;
@@ -24,14 +27,14 @@ a.title img {
 }
 
 div.userInfo {
-    margin-left: 3%;
-    margin-right: 4%;
+    margin: 20px 4% 0 3%;
 }
 
 div.userButtons {
     float: right;
     position: relative;
     padding-right: 4%;
+    bottom: 10px;
 }
 
 div.panel {
@@ -128,4 +131,10 @@ div.panel {
 .userInfo .karma {
     text-align: center;
     font-size: 32px;
+}
+
+.submitError {
+    color: red;
+    text-decoration: underline;
+    font-weight: bold;
 }

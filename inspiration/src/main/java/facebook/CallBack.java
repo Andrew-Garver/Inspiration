@@ -14,7 +14,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import facebook4j.Facebook; 
 import facebook4j.FacebookException;
+import facebook4j.IdNameEntity;
 import facebook4j.PictureSize;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -77,21 +85,61 @@ public class CallBack extends HttpServlet {
         }
         
         try {
-        request.getSession().setAttribute("name", facebook.getName());
-        request.getSession().setAttribute("id", facebook.getId());
-        request.getSession().setAttribute("profilePic", facebook.getPictureURL(PictureSize.large));
-        request.getSession().setAttribute("birthday", facebook.getMe().getBirthday());
-        request.getSession().setAttribute("bio", facebook.getMe().getBio());
-        request.getSession().setAttribute("homeTown", facebook.getMe().getHometown());
-        request.getSession().setAttribute("education", facebook.getMe().getEducation());
-        request.getSession().setAttribute("country", facebook.getMe().getLocale());
-        request.getSession().setAttribute("work", facebook.getMe().getWork());
-        request.getSession().setAttribute("website", facebook.getMe().getWebsite());
+            request.getSession().setAttribute("name", facebook.getName());
+            String name = facebook.getName();
+            request.getSession().setAttribute("id", facebook.getId());
+            request.getSession().setAttribute("pic", facebook.getPictureURL(PictureSize.large));
+            URL pic = facebook.getPictureURL();
+            request.getSession().setAttribute("birthday", facebook.getMe().getBirthday());
+            String birthday = facebook.getMe().getBirthday();
+            request.getSession().setAttribute("desc", facebook.getMe().getBio());
+            String desc = facebook.getMe().getBio();
+            request.getSession().setAttribute("loc", facebook.getMe().getHometown());
+            IdNameEntity loc = facebook.getMe().getHometown();
+            request.getSession().setAttribute("education", facebook.getMe().getEducation());
+            request.getSession().setAttribute("country", facebook.getMe().getLocale());
+            request.getSession().setAttribute("work", facebook.getMe().getWork());
+            request.getSession().setAttribute("personal_site", facebook.getMe().getWebsite());
+            URL website = facebook.getMe().getWebsite();
+            
+            String sql = "INSERT INTO users(name, desc, pic, birth_date, location, personal_site, join_date) "
+                + "VALUES('" + name + "','" + desc + "','" + pic + "','" + birthday + "','" + loc + "','"
+                + website + "','" + new Date() + "')";
+        
+            dbConnection db = new dbConnection();
+            db.setConnections();
+            Statement stmt = null;
+            Connection conn = null;
+            try {
+                Class.forName(db.getJDBC_DRIVER());
+                conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
+                stmt = conn.createStatement();
+                stmt.executeQuery(sql);
+            } catch(SQLException se) {
+                //Handle errors for JDBC
+                se.printStackTrace();
+            } catch (Exception se) {
+                request.getSession().setAttribute("badLogin", "Getting an exception when trying to log in...");
+                response.sendRedirect("signIn.jsp");
+            } finally {
+                //finally block used to close resources
+                try {
+                    if(stmt != null)
+                        stmt.close();
+                } catch(SQLException se2) {
+                }// nothing we can do
+                try {
+                    if(conn != null)
+                        conn.close();
+                } catch(SQLException se) {
+                    se.printStackTrace();
+                }//end finally try
+            }//end try
+            
         } catch (IllegalStateException e) {
-            //response.sendRedirect("error.jsp");
+            e.printStackTrace();
         } catch (FacebookException e) {
-            //response.sendRedirect("error.jsp");
-
+            e.printStackTrace();
         }
         
         response.sendRedirect("homepage.jsp");

@@ -7,6 +7,12 @@ package facebook;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.getenv;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +46,7 @@ public class AskQuestion extends HttpServlet {
             out.println("<title>Servlet AskQuestion</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>This servlet will add the question to the database using the post method</h1>");
+            out.println("<h1>Servlet AskQuestion at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -74,8 +80,81 @@ public class AskQuestion extends HttpServlet {
             throws ServletException, IOException {
         
         // Add information to database here.
+        String user_id = request.getSession().getAttribute("accountId").toString();
+        String sql = "SELECT MAX(post_id) AS id FROM posts";
+        String post_id = null;
+        dbConnection db = new dbConnection();
+        db.setConnections();
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            Class.forName(db.getJDBC_DRIVER());
+            conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if(rs.next()) {
+                post_id = rs.getString("user_id");
+            }
+        } catch(SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        } catch (Exception se) {
+            request.getSession().setAttribute("questionError", "Getting an exception when trying to log in...");
+            response.sendRedirect("askQuestion.jsp");
+        } finally {
+            //finally block used to close resources
+            try {
+                if(stmt != null)
+                    stmt.close();
+            } catch(SQLException se2) {
+            }// nothing we can do
+            try {
+                if(conn != null)
+                    conn.close();
+            } catch(SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+            
+        String postTitle = request.getParameter("question_title");
+        String postContent = request.getParameter("question_content");
+        PrintWriter out = response.getWriter();
+        out.println(user_id + " " + post_id + " " + postTitle + " " + postContent);
         
-        processRequest(request, response);
+        // Connect to our database
+        sql = "INSERT INTO posts (user_id, post_id, title, content) VALUES ("
+                + user_id + ", "
+                + post_id + ", "
+                + postTitle + ", "
+                + postContent + ")";
+        stmt = null;
+        conn = null;
+        try {
+            Class.forName(db.getJDBC_DRIVER());
+            conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
+            stmt = conn.createStatement();
+            stmt.executeQuery(sql);
+        } catch(SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        } catch (Exception se) {
+            request.getSession().setAttribute("questionError", "Getting an exception when trying to post your question...");
+            response.sendRedirect("askQuestion.jsp");
+        } finally {
+            //finally block used to close resources
+            try {
+                if(stmt != null)
+                    stmt.close();
+            } catch(SQLException se2) {
+            }// nothing we can do
+            try {
+                if(conn != null)
+                    conn.close();
+            } catch(SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        response.sendRedirect("forumRequest?entry=" + post_id); // comment this out to test the data we're posting
     }
 
     /**

@@ -1,4 +1,6 @@
+facebook\dbConnection.class
 facebook\logIn.class
+facebook\postListings.class
 facebook\AskQuestion.class
 facebook\forumRequest.class
 facebook\PostComment.class
