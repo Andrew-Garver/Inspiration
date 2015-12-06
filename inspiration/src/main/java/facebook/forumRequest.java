@@ -247,25 +247,23 @@ public class forumRequest extends HttpServlet {
         
         // If the post idh has no matches then send us to an appropriate page
         if(foundMatch == false) {
-            response.sendRedirect("https://www.lds.org/scriptures/bd/repentance");
+            response.sendRedirect("/inspiration/postListings");
             return;
         }
-            
-        //     protected String getResponse(String name, String pic, String reply, String date){                
-        try (PrintWriter out = response.getWriter()) {
+        
+        String replies = "<h2>No replies have been posted to this question</h2>";
+        String listingDetails = getLargeQuestion(author, pic, title, topic, joinDate, posterID, karma) + getNewBox();
 
-            out.println(getHeaderInfo());
-            out.println(getLargeQuestion(author, pic, title, topic, joinDate, posterID, karma));
-            out.println(getNewBox());
-
-            if(content.size() == 0)
-                out.println("<h2>No replies have been posted to this question</h2>");
+        if(!content.isEmpty()) {
             for(int i = 0; i < content.size(); i++) 
-                out.println(getResponse(names.get(i), photoURLs.get(i), content.get(i), time.get(i), replyIDs.get(i), repliesKarma.get(i)));            
-
-            out.println(getEndNewBox(getID));
-            out.println(getEndHTML());
+                replies = getResponse(names.get(i), photoURLs.get(i), content.get(i), time.get(i), replyIDs.get(i), repliesKarma.get(i));       
         }
+            
+        listingDetails += replies + getEndNewBox(getID) + "</div></div>";
+
+        request.getSession().setAttribute("listingDetails", listingDetails);
+
+        request.getRequestDispatcher("/postListingsDetails.jsp").forward(request, response);
     }
     
     

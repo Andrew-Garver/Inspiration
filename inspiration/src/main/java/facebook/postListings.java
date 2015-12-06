@@ -165,7 +165,7 @@ public class postListings extends HttpServlet {
         if(desiredTopic != null) {
             topicDefined = true;
             sql = "SELECT * FROM posts JOIN users ON posts.user_id=users.user_id JOIN topics ON posts.topic_id=topics.topic_id AND topics.topic_url_query='" + desiredTopic + "'";
-//            sql_topic = "SELECT topic_id FROM topics WHERE topic_url_query = \"" + desiredTopic + "\"";
+            sql_topic = "SELECT topic_name FROM topics WHERE topic_url_query = '" + desiredTopic + "'";
 
         }
         
@@ -190,8 +190,12 @@ public class postListings extends HttpServlet {
                 author.add(rs.getString("name"));
                 authorPic.add(rs.getString("pic"));
                 karma.add(rs.getInt("posts.karma_total"));
+            }     
+            
+            rs = stmt.executeQuery(sql_topic);
+            if (rs.next()) {
                 topicName = rs.getString("topic_name");
-            }            
+            }
         } catch(ClassNotFoundException e) {
             e.getMessage();
             e.printStackTrace();
@@ -214,7 +218,7 @@ public class postListings extends HttpServlet {
         // If the post idh has no matches then send us to an appropriate page
         if(foundMatch == false) {
             request.getSession().setAttribute("posts", "No Posts Found");
-            request.getSession().setAttribute("relatedPosts", "<h2>" + desiredTopic + "</h2>");
+            request.getSession().setAttribute("relatedPosts", "<h2>" + topicName + "</h2>");
             
             request.getRequestDispatcher("/postListings.jsp").forward(request, response);
         }
