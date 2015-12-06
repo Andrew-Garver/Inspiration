@@ -252,9 +252,9 @@ public class forumRequest extends HttpServlet {
         }
         
         String replies = "<h2>No replies have been posted to this question</h2>";
-        String listingDetails = getLargeQuestion(author, pic, title, topic, joinDate, posterID, karma);
+        String listingDetails = getLargeQuestion(author, pic, title, topic, joinDate, posterID, karma) + getNewBox();
 
-            if(content.size() > 0) {
+            if(!content.isEmpty()) {
             for(int i = 0; i < content.size(); i++) 
                 replies = getResponse(names.get(i), photoURLs.get(i), content.get(i), time.get(i), replyIDs.get(i), repliesKarma.get(i));       
             }
