@@ -211,11 +211,11 @@ public class forumRequest extends HttpServlet {
                 foundMatch = true;
                 posterID = rs.getInt("post_id");
                 karma = rs.getInt("karma_total");
-                author = rs.getString("name");
+                author = rs.getString("username");
                 title = rs.getString("title");
                 topic = rs.getString("topic");
                 pic = rs.getString("pic");
-                joinDate = (rs.getDate("date_posted")).toString();
+                joinDate = "temp fix"; //(rs.getDate("date_posted")).toString();
             }
             
             // Get the Reply information
@@ -223,9 +223,9 @@ public class forumRequest extends HttpServlet {
             while(rs.next()) {
                 // Grab variables & store them
                 responderIDs.add(rs.getInt("user_id"));
-                replyIDs.add(rs.getInt("post_id"));
+                replyIDs.add(rs.getInt("reply_id"));
                 repliesKarma.add(rs.getInt("karma_total"));
-                names.add(rs.getString("name"));
+                names.add(rs.getString("username"));
                 photoURLs.add(rs.getString("pic"));
                 content.add(rs.getString("content"));
                 time.add((rs.getDate("date_posted")).toString());
