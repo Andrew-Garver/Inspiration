@@ -13,17 +13,6 @@
         <title>Ask a question</title>
     </head>
     <body>
-        Session attributes:
-<%
-  for (Enumeration e = session.getAttributeNames(); e.hasMoreElements(); ) {     
-    String attribName = (String) e.nextElement();
-    Object attribValue = session.getAttribute(attribName);
-%>
-<BR><%= attribName %> - <%= attribValue %>
-
-<%
-}
-%>
         <jsp:include page="/modules/header.jsp" />
         <div class="userInfo">
             <div class="col-md-10">
