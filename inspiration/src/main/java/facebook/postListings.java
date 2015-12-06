@@ -157,12 +157,16 @@ public class postListings extends HttpServlet {
                 
         Boolean topicDefined = false;
         
-        String sql;        
-        if(desiredTopic == null)
-             sql = "SELECT * FROM posts JOIN users ON posts.user_id=users.user_id";
-        else {
+        String topicName = "";
+        String sql;
+        String sql_topic = "";
+        sql = "SELECT * FROM posts JOIN users ON posts.user_id=users.user_id JOIN topics ON posts.topic_id=topics.topic_id";
+
+        if(desiredTopic != null) {
             topicDefined = true;
-            sql = "SELECT * FROM posts JOIN users ON posts.user_id=users.user_id AND posts.topic='" + desiredTopic + "'";
+            sql = "SELECT * FROM posts JOIN users ON posts.user_id=users.user_id JOIN topics ON posts.topic_id=topics.topic_id AND topics.topic_url_query='" + desiredTopic + "'";
+//            sql_topic = "SELECT topic_id FROM topics WHERE topic_url_query = \"" + desiredTopic + "\"";
+
         }
         
         dbConnection db = new dbConnection();
@@ -182,10 +186,11 @@ public class postListings extends HttpServlet {
                 foundMatch = true;
                 posterIDs.add(rs.getInt("post_id"));
                 title.add(rs.getString("title"));
-                topics.add(rs.getString("topic"));
+                topics.add(rs.getString("topic_name"));
                 author.add(rs.getString("name"));
                 authorPic.add(rs.getString("pic"));
                 karma.add(rs.getInt("posts.karma_total"));
+                topicName = rs.getString("topic_name");
             }            
         } catch(ClassNotFoundException e) {
             e.getMessage();
@@ -208,9 +213,12 @@ public class postListings extends HttpServlet {
         
         // If the post idh has no matches then send us to an appropriate page
         if(foundMatch == false) {
-            response.sendRedirect("https://www.lds.org/scriptures/bd/faith");
-            return;
+            request.getSession().setAttribute("posts", "No Posts Found");
+            request.getSession().setAttribute("relatedPosts", "<h2>" + desiredTopic + "</h2>");
+            
+            request.getRequestDispatcher("/postListings.jsp").forward(request, response);
         }
+        else {
             
 
         //     protected String getResponse(String name, String pic, String reply, String date){                
@@ -220,7 +228,7 @@ public class postListings extends HttpServlet {
 
                 // "<div class=\"commenterImage\">\n" + " <img src=" + pic + "/>"
             if(topicDefined) {
-                relatedPosts = "<h2>Posts relating to " + desiredTopic + "</h2>";
+                relatedPosts = "<h2>" + topicName + "</h2>";
             }
                 
             for(int i = 0; i < posterIDs.size(); i++) {
@@ -250,6 +258,7 @@ public class postListings extends HttpServlet {
             request.getRequestDispatcher("/postListings.jsp").forward(request, response);
 //            out.println(getEndHTML());
 //        }
+        }
     }
     
     
