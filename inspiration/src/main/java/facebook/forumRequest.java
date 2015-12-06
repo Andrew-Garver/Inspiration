@@ -187,7 +187,7 @@ public class forumRequest extends HttpServlet {
         Vector<String> photoURLs = new Vector<>();        
         Vector<String> content = new Vector<>();        
         Vector<String> time = new Vector<>();  
-        String SQL_POST = "SELECT * FROM posts JOIN users ON posts.post_id = " + getID + " AND posts.user_id=users.user_id";
+        String SQL_POST = "SELECT * FROM posts JOIN users ON posts.post_id = " + getID + " AND posts.user_id=users.user_id JOIN topics ON posts.topic_id = topics.topic_id";
         String SQL_COMMENTS = "SELECT * FROM replies JOIN users ON replies.post_id=" + getID + " AND replies.user_id=users.user_id";
         
         dbConnection db = new dbConnection();
@@ -207,10 +207,10 @@ public class forumRequest extends HttpServlet {
                 // Grab variables & store them
                 foundMatch = true;
                 posterID = rs.getInt("post_id");
-                karma = rs.getInt("karma_total");
+                karma = rs.getInt("posts.karma_total");
                 author = rs.getString("username");
                 title = rs.getString("title");
-                topic = rs.getString("topic_id");
+                topic = rs.getString("topic_name");
                 pic = rs.getString("pic");
                 joinDate = "temp fix"; //(rs.getDate("date_posted")).toString();
             }
