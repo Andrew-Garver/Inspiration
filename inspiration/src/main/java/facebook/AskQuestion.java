@@ -81,7 +81,7 @@ public class AskQuestion extends HttpServlet {
         
         // Add information to database here.
         String user_id = request.getSession().getAttribute("user_id").toString();
-        String sql = "SELECT MAX(post_id) AS id FROM posts";
+        String sql = "SELECT MAX(post_id) + 1 AS id FROM posts";
         String post_id = null;
         dbConnection db = new dbConnection();
         db.setConnections();
@@ -119,22 +119,26 @@ public class AskQuestion extends HttpServlet {
             
         String postTitle = request.getParameter("question_title");
         String postContent = request.getParameter("question_content");
+        String postParentTopic = request.getParameter("question_topic");
         PrintWriter out = response.getWriter();
-        out.println(user_id + " " + post_id + " " + postTitle + " " + postContent);
+        String postType = "question";
+        out.println("userid: " + user_id + " post_id: " + post_id + " post-title: " + postTitle + " post-content: " + postContent + " post-type: " + postType + " post-parent-topic: " + postParentTopic);
         
-        // Connect to our database
-        sql = "INSERT INTO posts (user_id, post_id, title, content) VALUES ("
+//        Connect to our database
+        sql = "INSERT INTO posts (user_id, post_id, title, content, type, topic_id) VALUES ("
                 + user_id + ", "
                 + post_id + ", "
-                + postTitle + ", "
-                + postContent + ")";
+                + "'" + postTitle + "'" + ", "
+                + "'" + postContent + "'" + ", "
+                + "'" + postType + "'" + ", "
+                + postParentTopic + ")";
         stmt = null;
         conn = null;
         try {
             Class.forName(db.getJDBC_DRIVER());
             conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
             stmt = conn.createStatement();
-            stmt.executeQuery(sql);
+            stmt.executeUpdate(sql);
         } catch(SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
