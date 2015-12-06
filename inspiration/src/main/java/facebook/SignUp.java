@@ -85,19 +85,19 @@ public class SignUp extends HttpServlet {
         String pic = request.getParameter("url");
         String age = request.getParameter("age");
         String location = request.getParameter("location");
-
+        
+        String checkIfUserExists = "SELECT * FROM users WHERE email = \"" + email + "\" OR username = \"" + username + "\"";
+        String insertUserIntoTable = "INSERT INTO users (username,email,password,description,pic,location)"
+                + " VALUES (\""+username+"\",\""+email+"\",\""+password+"\",\""+description+"\",\""+pic+"\",\""+location+"\")";
+        
         dbConnection db = new dbConnection();
         db.setConnections();
 
         Statement stmt = null;
         Connection conn = null;
         ResultSet rs;
-        
-        String checkIfUserExists = "SELECT * FROM users WHERE email = \"" + email + "\" OR username = \"" + username + "\"";
-        String insertUserIntoTable = "INSERT INTO users (username,email,password,description,pic,location)"
-                + " VALUES (\""+username+"\",\""+email+"\",\""+password+"\",\""+description+"\",\""+pic+"\",\""+location+"\")";
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(db.getJDBC_DRIVER());
             conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
             stmt = conn.createStatement();
             rs = stmt.executeQuery(checkIfUserExists);

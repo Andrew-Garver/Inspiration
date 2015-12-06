@@ -81,7 +81,7 @@ public class replyVote extends HttpServlet {
 
         // Lookup the vote information
         String previousVote = "NO VOTE";
-        String previousVoteSQL = "SELECT * FROM reply_votes WHERE reply_id=" + replyNumber + " AND user_id="+ voterID;        
+        String previousVoteSQL = "SELECT * FROM reply_votes WHERE reply_id=" + replyNumber + " AND user_id="+ voterID; 
         
         dbConnection db = new dbConnection();
         db.setConnections();
@@ -90,7 +90,7 @@ public class replyVote extends HttpServlet {
         Connection conn = null;
         ResultSet rs;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(db.getJDBC_DRIVER());
             conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
             stmt = conn.createStatement();
 

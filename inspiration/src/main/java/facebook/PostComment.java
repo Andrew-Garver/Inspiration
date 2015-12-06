@@ -83,30 +83,28 @@ public class PostComment extends HttpServlet {
         out.println(getID);
 //        String getID = "1";
 
-        // Define our constants
-        String DB_URL = "jdbc:mysql://localhost/jsp";
-        String USER = "adminLGMn6AW";
-        String PASS = "Lhh3jeWDXKe1";
-
 //        String userID = request.getSession().getAttribute("id").toString();
         String userID = request.getSession().getAttribute("user_id").toString();
         String post_id = request.getParameter("question_id");
         String reply = request.getParameter("reply");
         
         out.println(userID + " " + post_id + " " + reply);
-
-        // Connect to our database
-        Connection conn = null;
-        Statement stmt = null;
+        
         String SQL = "INSERT INTO replies (user_id, post_id, content) VALUES (" + userID
                 + ", " + post_id
                 + ", \"" + reply + "\")";
         out.println(SQL);
         boolean executeStatus = false;
+        
+        dbConnection db = new dbConnection();
+        db.setConnections();
 
+        Statement stmt = null;
+        Connection conn = null;
+        ResultSet rs;
         try {
-            Class.forName("com.mysql.jdbc.Driver"); // Loads a class in by a dynamic string's name vs static naming conventions    
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Class.forName(db.getJDBC_DRIVER());
+            conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
             stmt = conn.createStatement();
 
             stmt.executeUpdate(SQL);

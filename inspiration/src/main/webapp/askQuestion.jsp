@@ -19,8 +19,7 @@
                     
                     <input class="form-control" type="text" style="max-width: 40%; float:left;" placeholder="Question title" name="question_title">
                     
-                    <div>
-                        <select id="category" style="margin-left:20px;">
+                    <select id="category" name="question_Topic" style="margin-left:20px;">
                             <!-- This list should pull from the database. -->
                             <option>Mathematics</option>
                             <option>Literature</option>
@@ -29,8 +28,7 @@
                             <option>Computer Science</option>
                             <option>Web Design</option>
                             <option>Athletics</option>
-                        </select>
-                    </div>
+                    </select><br/>
                     <br>
                     <textarea class="form-control" rows="5" name="question_content" id="question" placeholder="Question text goes here..."></textarea>
                     <br><input class="btn btn-primary" type="submit" value="Submit">

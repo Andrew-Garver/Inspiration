@@ -162,7 +162,7 @@ public class postListings extends HttpServlet {
              sql = "SELECT * FROM posts JOIN users ON posts.user_id=users.user_id";
         else {
             topicDefined = true;
-            sql = "SELECT * FROM posts JOIN users ON posts.user_id=users.user_id AND posts.topic=\"" + desiredTopic + "\"";
+            sql = "SELECT * FROM posts JOIN users ON posts.user_id=users.user_id AND posts.topic='" + desiredTopic + "'";
         }
         
         dbConnection db = new dbConnection();
@@ -185,7 +185,7 @@ public class postListings extends HttpServlet {
                 topics.add(rs.getString("topic"));
                 author.add(rs.getString("name"));
                 authorPic.add(rs.getString("pic"));
-                karma.add(rs.getInt("karma_total"));
+                karma.add(rs.getInt("posts.karma_total"));
             }            
         } catch(ClassNotFoundException e) {
             e.getMessage();

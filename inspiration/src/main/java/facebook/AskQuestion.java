@@ -80,20 +80,21 @@ public class AskQuestion extends HttpServlet {
             throws ServletException, IOException {
         
         // Add information to database here.
-        String user_id = request.getSession().getAttribute("accountId").toString();
+        String user_id = request.getSession().getAttribute("user_id").toString();
         String sql = "SELECT MAX(post_id) AS id FROM posts";
         String post_id = null;
         dbConnection db = new dbConnection();
         db.setConnections();
         Statement stmt = null;
         Connection conn = null;
+        ResultSet rs;
         try {
             Class.forName(db.getJDBC_DRIVER());
             conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
             stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            rs = stmt.executeQuery(sql);
             if(rs.next()) {
-                post_id = rs.getString("user_id");
+                post_id = rs.getString("id");
             }
         } catch(SQLException se) {
             //Handle errors for JDBC

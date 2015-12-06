@@ -89,7 +89,7 @@ public class postVote extends HttpServlet {
         Connection conn = null;
         ResultSet rs;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(db.getJDBC_DRIVER());
             conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
             stmt = conn.createStatement();
 

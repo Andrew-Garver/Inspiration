@@ -186,22 +186,19 @@ public class forumRequest extends HttpServlet {
         Vector<String> names = new Vector<>();        
         Vector<String> photoURLs = new Vector<>();        
         Vector<String> content = new Vector<>();        
-        Vector<String> time = new Vector<>();        
-        
-        // Define our constants
-        String DB_URL = "jdbc:mysql://localhost/jsp";
-        String USER = "adminLGMn6AW";
-        String PASS = "Lhh3jeWDXKe1";
-        
-        // Connect to our database
-        Connection conn = null;
-        Statement  stmt = null;
+        Vector<String> time = new Vector<>();  
         String SQL_POST = "SELECT * FROM posts JOIN users ON posts.post_id = " + getID + " AND posts.user_id=users.user_id";
         String SQL_COMMENTS = "SELECT * FROM replies JOIN users ON replies.post_id=" + getID + " AND replies.user_id=users.user_id";
+        
+        dbConnection db = new dbConnection();
+        db.setConnections();
+
+        Statement stmt = null;
+        Connection conn = null;
         ResultSet rs;
-        try{
-            Class.forName("com.mysql.jdbc.Driver"); // Loads a class in by a dynamic string's name vs static naming conventions    
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        try {
+            Class.forName(db.getJDBC_DRIVER());
+            conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
             stmt = conn.createStatement();
 
             // Get the Post's information
