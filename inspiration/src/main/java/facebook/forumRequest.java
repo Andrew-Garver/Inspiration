@@ -210,7 +210,7 @@ public class forumRequest extends HttpServlet {
                 karma = rs.getInt("karma_total");
                 author = rs.getString("username");
                 title = rs.getString("title");
-                topic = rs.getString("topic");
+                topic = rs.getString("topic_id");
                 pic = rs.getString("pic");
                 joinDate = "temp fix"; //(rs.getDate("date_posted")).toString();
             }
