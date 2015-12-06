@@ -4,6 +4,7 @@
     Author     : Andrew Garver
 --%>
 
+<%@page import="java.util.Enumeration"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,15 +20,15 @@
                     
                     <input class="form-control" type="text" style="max-width: 40%; float:left;" placeholder="Question title" name="question_title">
                     
-                    <select id="category" name="question_Topic" style="margin-left:20px;">
+                    <select id="category" name="question_topic" style="margin-left:20px;">
                             <!-- This list should pull from the database. -->
-                            <option>Mathematics</option>
-                            <option>Literature</option>
-                            <option>Economics</option>
-                            <option>Homemaking</option>
-                            <option>Computer Science</option>
-                            <option>Web Design</option>
-                            <option>Athletics</option>
+                            <option value="1">Mathematics</option>
+                            <option value="2">Literature</option>
+                            <option value="3">Economics</option>
+                            <option value="4">Homemaking</option>
+                            <option value="5">Computer Science</option>
+                            <option value="6">Web Design</option>
+                            <option value="7">Athletics</option>
                     </select><br/>
                     <br>
                     <textarea class="form-control" rows="5" name="question_content" id="question" placeholder="Question text goes here..."></textarea>

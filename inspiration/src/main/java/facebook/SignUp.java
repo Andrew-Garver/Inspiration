@@ -78,17 +78,21 @@ public class SignUp extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
+        String name = request.getParameter("name");
         String email = request.getParameter("email");
-        String username = request.getParameter("name");
+        String website = request.getParameter("website");
+        String linkedin = request.getParameter("linkedin");
+        String picurl = request.getParameter("picurl");
+        String username = request.getParameter("username");
+        String birthday = request.getParameter("birthday");
+        String location = request.getParameter("location");
         String password = request.getParameter("password");
         String description = request.getParameter("description");
-        String pic = request.getParameter("url");
-        String age = request.getParameter("age");
-        String location = request.getParameter("location");
         
-        String checkIfUserExists = "SELECT * FROM users WHERE email = \"" + email + "\" OR username = \"" + username + "\"";
-        String insertUserIntoTable = "INSERT INTO users (username,email,password,description,pic,location)"
-                + " VALUES (\""+username+"\",\""+email+"\",\""+password+"\",\""+description+"\",\""+pic+"\",\""+location+"\")";
+        String checkIfUserExists = "SELECT * FROM users WHERE email = '" + email + "' OR username = '" + username + "'";
+        String insertUserIntoTable = "INSERT INTO users (username,email,password,name,desc,pic,birth_date,location,linked_in,personal_site)"
+                + " VALUES ('"+username+"','"+email+"','"+password+"','"+name+"','"+description+"','"+picurl+"','"+birthday+"','"+location+"','"+linkedin+"','"+website+"')";
+        String getUserId = "SELECT user_id FROM users WHERE username = '" + username + "'";
         
         dbConnection db = new dbConnection();
         db.setConnections();
@@ -102,7 +106,8 @@ public class SignUp extends HttpServlet {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(checkIfUserExists);
             if (rs.next()) { // if the user already exists, handle it
-                response.sendRedirect("http://i.imgur.com/TOHN2.png");
+                request.getSession().setAttribute("dupeAcct", "That username or email has already been registered");
+                response.sendRedirect("signUp.jsp");
             } else { // input the user to the db
 //                stmt.close();
                 stmt = conn.createStatement();
@@ -138,7 +143,7 @@ public class SignUp extends HttpServlet {
 
         // add any other info we might need here
         request.getSession().setAttribute("name", username);
-        request.getSession().setAttribute("pic", pic);
+        request.getSession().setAttribute("pic", picurl);
         request.getSession().setAttribute("loc", location);
         request.getSession().setAttribute("user_id", "1");
         request.getSession().setAttribute("loggedIn", "true");

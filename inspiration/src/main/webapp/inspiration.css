@@ -4,7 +4,11 @@
 */
 
 @import url(//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css);
-
+.boxsizingBorder {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
 .center {
     float:none;
     margin-left:auto;
@@ -55,7 +59,6 @@ div.panel {
     padding-left: 3px;
     padding-left: 4px \9;
     /* IE7-8 doesn't have border-radius, so don't indent the padding */
-
     margin-bottom: 10px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -144,18 +147,6 @@ div.panel {
     text-decoration: underline;
     font-weight: bold;
 }
-
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : Nov 23, 2015, 2:04:35 PM
-    Author     : temp
-*/
-
-
 .detailBox {
     width:700px;
     border:1px solid #bbb;
@@ -220,4 +211,9 @@ and open the template in the editor.
 .actionBox {
     border-top:1px dotted #bbb;
     padding:10px;
+}
+.warning {
+    color: red;
+    font-weight: bold;
+    font-size: 11pt;
 }
