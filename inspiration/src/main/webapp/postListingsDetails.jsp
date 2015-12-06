@@ -17,7 +17,6 @@
             <div class="col-md-4"></div>
             <div class="col-md-6">
                 ${listingDetails}
-                ${replies}
             </div>
             <div class="col-md-2">
                 <form action="#" method="post">
