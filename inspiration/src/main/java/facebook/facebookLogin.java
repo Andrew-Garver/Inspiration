@@ -64,12 +64,7 @@ public class facebookLogin extends HttpServlet {
 
         Facebook facebook = new FacebookFactory().getInstance();
 
-        facebook.setOAuthAppId("423248727863717", "");
-
-        String accessTokenString = "CAAGA8UYTcaUBALmtksLjZAFT3a7Ca3fX6yOfBSAvqBbCdijUdCscV49vCSVpwOR56DgTYEVJkORZByQMBdcUSUXRKnqg5sHTa64ZBAwEUOpWbKGf1oZALtS95hy4nBGuou6mskDFzdoK7GCvhdkefv5RQWgVHPzqLR1BtGKtxJgZCrPIFP8M0XlZBETDU6twgZD";
-        AccessToken at = new AccessToken(accessTokenString);
-        // Set access token.
-        facebook.setOAuthAccessToken(at);
+        facebook.setOAuthAppId("423248727863717", "b1cfa1e828965254382d3483bc977e08");
 
         request.getSession().setAttribute("facebook", facebook);
 

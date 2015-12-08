@@ -87,7 +87,7 @@ public class CallBack extends HttpServlet {
         try {
             request.getSession().setAttribute("name", facebook.getName());
             String name = facebook.getName();
-            request.getSession().setAttribute("id", facebook.getId());
+            request.getSession().setAttribute("user_id", facebook.getId());
             request.getSession().setAttribute("pic", facebook.getPictureURL(PictureSize.large));
             URL pic = facebook.getPictureURL();
             request.getSession().setAttribute("birthday", facebook.getMe().getBirthday());
