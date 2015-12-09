@@ -18,51 +18,31 @@
         <link rel="stylesheet" type="text/css" href="ref.css">
         <title>JSP Page</title>
     </head>
-    <body>            
-        
-        
-        
-    <div class="detailBox">
-    <div class="titleBox">
-      <label>Responses</label>
-    </div>        
-    <div class="actionBox">
-        <ul class="commentList">           
-            
-            
-            <li>
-                <div class="commenterImage">
-                  <img src="http://lorempixel.com/50/50/people/6" />
-                </div>
-                <div class="commentText">
-                    <p>Hello this is a test comment.</p> <span class="date sub-text">on March 5th, 2014</span>
-
-                </div>
-            </li>                 
-
-        
-            
-            
-        <form class="form-inline" role="form">
-            <div class="form-group">
-                <input class="form-control" type="text" placeholder="Your comments" />
-            </div>            
-            <div class="form-group">
-                <button class="btn btn-default">Add</button>
+    <body>
+        <div class="detailBox">
+            <div class="titleBox">
+                <label>Responses</label>
             </div>
-        </form>
-
-
-
-
-            
-            
-            
-            
-            
-            
-
-    </div>
-</div>
+            <div class="actionBox">
+                <ul class="commentList">
+                    <li>
+                        <div class="commenterImage">
+                            <img src="http://lorempixel.com/50/50/people/6" />
+                        </div>
+                        <div class="commentText">
+                            <p>Hello this is a test comment.</p> <span class="date sub-text">on March 5th, 2014</span>
+                        </div>
+                    </li>
+                </ul>
+                <form class="form-inline" role="form">
+                    <div class="form-group">
+                        <input class="form-control" type="text" placeholder="Your comments" />
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-default">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </body>
 </html>

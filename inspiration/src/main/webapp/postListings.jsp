@@ -19,7 +19,7 @@
                 ${relatedPosts}
                 ${posts}
             </div>
-            <div class="col-md-2">
+            <div class="stay-right">
                 <form action="#" method="post">
                     <div id="custom-search-input">
                         <div class="input-group col-md-12">

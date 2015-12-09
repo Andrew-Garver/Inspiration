@@ -106,7 +106,13 @@ public class logIn extends HttpServlet {
                 request.getSession().setAttribute("name", rs.getString("username"));
                 request.getSession().setAttribute("pic", rs.getString("pic"));
                 request.getSession().setAttribute("desc", rs.getString("desc"));
+                request.getSession().setAttribute("location", rs.getString("location"));
                 request.getSession().setAttribute("user_id", rs.getString("user_id"));
+                request.getSession().setAttribute("email", rs.getString("email"));
+                request.getSession().setAttribute("faebook", rs.getString("facebook"));
+                request.getSession().setAttribute("linked_in", rs.getString("linked_in"));
+                request.getSession().setAttribute("website", rs.getString("personal_site"));
+                request.getSession().setAttribute("join_date", rs.getString("join_date"));
                 request.getSession().setAttribute("birth_date", rs.getString("birth_date"));
                 out.println("assigned session vars");
                 Calendar today = Calendar.getInstance();

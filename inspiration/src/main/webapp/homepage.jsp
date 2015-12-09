@@ -14,12 +14,10 @@
     <body>
         <jsp:include page="/modules/header.jsp" />
         <div class="userInfo">
-            <div class="col-md-4"></div>
-            <div class="col-md-6"></div>
-            <div class="col-md-2">
+            <div class="stay-right">
                 <form action="#" method="post">
                     <div id="custom-search-input">
-                        <div class="input-group col-md-12">
+                        <div class="input-group">
                             <input type="text" class="search-query form-control" placeholder="Search" name="keyword" />
                             <span class="input-group-btn">
                                 <button class="btn btn-danger" type="submit">
