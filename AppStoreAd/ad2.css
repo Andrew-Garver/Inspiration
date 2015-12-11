@@ -1,0 +1,73 @@
+img.title_pic {
+	margin-left: 17%;
+    margin-top: 2%;
+    max-width: 12%;
+    float: left;
+}
+
+h1 {
+    font-size: 760%;
+    margin-top: 8%;
+    padding-left: 23%;
+    position: relative;
+    text-align: left;
+}
+
+div.about {
+    padding-top: 2%;
+    max-width: 82%;
+    margin: auto;
+    font-size: 136%;
+}
+
+h2 {
+	padding-top: 3%;
+    font-size: 50px;
+    text-align: center;
+}
+
+div.blurb {
+	max-width: 50%;
+}
+
+div.wel {
+	/*float: right;
+	max-width: 60%;
+	margin-right: 5%;
+	padding-left: 5%;*/
+}
+
+h5.left {
+	font-size: 193%;
+	margin-left: 4%;
+}
+
+h5.right {
+	font-size: 193%;
+	margin-right: 4%;
+
+}
+
+td {
+	padding-top: 1%;
+	padding-bottom:1%;
+}
+
+td.td_pic {
+	width: 40%;
+}
+
+table.bubbles {
+	margin-top: 2%;
+}
+
+form.button {
+	padding-top: 3%;
+	text-align: center;
+}
+
+td.heading {
+    padding-left: 5%;
+    font-size: 400%;
+    padding-top: 4%;
+}

@@ -1,0 +1,51 @@
+img.title_pic {
+	margin-left: 5%;
+	margin-top: 5%;
+	max-width: 140%;
+}
+
+h1 {
+	font-size: 400%;
+	margin-top: 13%;
+	margin-left: 4%;
+}
+
+div.about {
+	margin-top: 3%;
+	margin-left: 3%;
+	max-width: 35%;
+	font-size: 150%;
+}
+
+div.blurb {
+	max-width: 50%;
+}
+
+div.wel {
+	float: right;
+	max-width: 60%;
+	margin-right: 5%;
+	padding-left: 5%;
+}
+
+td.imgDesc {
+	padding-left:10%;
+}
+
+td {
+	padding-top: 1%;
+	padding-bottom:1%;
+}
+
+td.td_pic {
+	width: 40%;
+}
+
+table.bubbles {
+	margin-top: 2%;
+}
+
+form.button {
+	padding-top: 3%;
+	text-align: center;
+}
