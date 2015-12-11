@@ -19,8 +19,7 @@
                 <form action="AskQuestion" method="post">
                     
                     <input class="form-control" type="text" style="max-width: 40%; float:left;" placeholder="Question title" name="question_title">
-                    
-                    <select id="category" name="question_topic" style="margin-left:20px;">
+                    <select class="form-control" id="category" name="question_topic" style="max-width: 15%;">
                             <!-- This list should pull from the database. -->
                             <option value="1">Mathematics</option>
                             <option value="2">Literature</option>
@@ -29,14 +28,14 @@
                             <option value="5">Computer Science</option>
                             <option value="6">Web Design</option>
                             <option value="7">Athletics</option>
-                    </select><br/>
-                    <br>
+                    </select>
+                    <br/>
                     <textarea class="form-control" rows="5" name="question_content" id="question" placeholder="Question text goes here..."></textarea>
                     <br><input class="btn btn-primary" type="submit" value="Submit">
                 </form>
 
             </div>
-            <div class="col-md-2">
+            <div class="stay-right">
                 <form action="#" method="post">
                     <div id="custom-search-input">
                         <div class="input-group col-md-12">

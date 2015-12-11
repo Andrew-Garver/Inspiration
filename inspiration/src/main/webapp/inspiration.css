@@ -129,6 +129,18 @@ div.panel {
     font-size: 18px;
 }
 
+.stay-right {
+    position: fixed;
+    right: 1em;
+    max-width: 15%;
+}
+
+.required {
+    color: red;
+    font-size: 12pt;
+    font-weight: bold;
+}
+
 /* User page */
 .userInfo .userListDetails {
     font-size: 18px;

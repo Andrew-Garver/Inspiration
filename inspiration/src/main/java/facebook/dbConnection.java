@@ -19,14 +19,14 @@ public class dbConnection {
     private String PASS;
     
     // remove opening multi-line comment and adjust vars for local connection
-    public void setConnections() {
+/*    public void setConnections() {
         this.DB_URL = "jdbc:mysql://localhost:3306/jsp";
         this.USER = "root";
         this.PASS = "";
     }     // */
     
     // remove opening multi-line comment for server connection
-/*    public void setConnections() {
+    public void setConnections() {
         String host = getenv("OPENSHIFT_MYSQL_DB_HOST");
         String port = getenv("OPENSHIFT_MYSQL_DB_PORT");
         this.setDB_URL("jdbc:mysql://" + host + ":" + port + "/jsp");

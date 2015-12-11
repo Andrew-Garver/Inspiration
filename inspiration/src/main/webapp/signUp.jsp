@@ -22,9 +22,9 @@
                         <span class="warning">${dupeAcct}</span>
                         <div class="row">
                             <div class="col-md-5">
-                                Name: <br>
+                                Name: <i class="required">*</i><br>
                                 <input class="form-control register-input" type="text" name="name" id="name" required autofocus placeholder="Someone Somewhere"><br>
-                                Email: <br>                        
+                                Email: <i class="required">*</i><br>                        
                                 <input class="form-control register-input" type="email" name="email" id="email" required placeholder="someone@somewhere.com"><br>
                                 Personal Website:  <br>
                                 <input class="form-control register-input" type="text" name="website" id="website" placeholder="www.someone.com"><br>
@@ -34,22 +34,22 @@
                                 <input class="form-control register-input" type="text" name="picurl" id="picurl" placeholder="www.photobucket.com/someone/me.jpg"><br>
                             </div>
                             <div class="col-md-5" style="margin-left:20px;">
-                                Username: <br>
+                                Username: <i class="required">*</i><br>
                                 <input class="form-control register-input" type="text" name="username" id="username" required placeholder="sum1sum"><br>
-                                Birthday:  <br/>
+                                Birthday:  <i class="required">*</i><br/>
                                 <input class="form-control register-input" type="date" name="birthday" id="birthday" required><br>
                                 Location:  <br/>
                                 <input class="form-control register-input" type="text" name="location" id="location" placeholder="Somewhere, USA"><br>
-                                Password: <br>
+                                Password: <i class="required">*</i><br>
                                 <input class="form-control register-input" type="password" name="password" id="password" required placeholder="P@$$w0rD"><br>
-                                Confirm Password: <br>
+                                Confirm Password: <i class="required">*</i><br>
                                 <input class="form-control register-input" type="password" name="password2" id="password2" onchange="checkPassword()" required placeholder="P@$$w0rD"><br>
                                 <span class="warning" id="passwordWarning"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-8">
-                                Tell Me About Yourself:
+                                Tell Me About Yourself: <i class="required">*</i>
                                 <textarea class="boxsizingBorder" cols=60 rows=5 wrap="hard" name="description" placeholder="I'm really awesome, and you can be, too. Just ask me for advice on anything!"></textarea><br/><br/>
                             </div>
                         </div>

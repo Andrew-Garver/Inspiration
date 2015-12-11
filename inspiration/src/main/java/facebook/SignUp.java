@@ -80,9 +80,18 @@ public class SignUp extends HttpServlet {
         PrintWriter out = response.getWriter();
         String name = request.getParameter("name");
         String email = request.getParameter("email");
-        String website = request.getParameter("website");
-        String linkedin = request.getParameter("linkedin");
-        String picurl = request.getParameter("picurl");
+        String website = "http://gothamist.com/2015/09/21/youd_be_surprised_why_you_need_a_pe.php";
+        if(request.getParameter("website") != "") {
+            website = request.getParameter("website");
+        }
+        String linkedin = "https://www.linkedin.com/";
+        if(request.getParameter("linkedin") != "") {
+            linkedin = request.getParameter("linkedin");
+        }
+        String picurl = "http://www.visimpact.net/wp-content/uploads/2014/11/no_user_icon.gif";
+        if(request.getParameter("picurl") != "") {
+            picurl = request.getParameter("picurl");
+        }
         String username = request.getParameter("username");
         String birthday = request.getParameter("birthday");
         String location = request.getParameter("location");
@@ -109,12 +118,8 @@ public class SignUp extends HttpServlet {
                 request.getSession().setAttribute("dupeAcct", "That username or email has already been registered");
                 response.sendRedirect("signUp.jsp");
             } else { // input the user to the db
-//                stmt.close();
                 stmt = conn.createStatement();
                 stmt.executeUpdate(insertUserIntoTable);
-//                if (!rs.next()) { // if the insert failed, handle it
-//                    response.sendRedirect("http://4.bp.blogspot.com/-Tgc6NxiHd-8/VPZjiYbqd0I/AAAAAAAAIG4/moLHQAt8C3c/s1600/Screen%2BShot%2B2015-03-03%2Bat%2B6.44.15%2BPM.png");
-//                }
             }
         } catch (SQLException se) {
             //Handle errors for JDBC
