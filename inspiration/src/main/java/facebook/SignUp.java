@@ -150,7 +150,7 @@ public class SignUp extends HttpServlet {
         request.getSession().setAttribute("name", username);
         request.getSession().setAttribute("pic", picurl);
         request.getSession().setAttribute("loc", location);
-        request.getSession().setAttribute("user_id", "1");
+        request.getSession().setAttribute("user_id", getUserId);
         request.getSession().setAttribute("loggedIn", "true");
         response.sendRedirect("homepage.jsp");
         
