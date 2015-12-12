@@ -99,7 +99,7 @@ public class SignUp extends HttpServlet {
         String description = request.getParameter("description");
         
         String checkIfUserExists = "SELECT * FROM users WHERE email = '" + email + "' OR username = '" + username + "'";
-        String insertUserIntoTable = "INSERT INTO users (username,email,password,name,desc,pic,birth_date,location,linked_in,personal_site)"
+        String insertUserIntoTable = "INSERT INTO users (username,email,password,name,user_desc,pic,birth_date,location,linked_in,personal_site)"
                 + " VALUES ('"+username+"','"+email+"','"+password+"','"+name+"','"+description+"','"+picurl+"','"+birthday+"','"+location+"','"+linkedin+"','"+website+"')";
         String getUserId = "SELECT user_id FROM users WHERE username = '" + username + "'";
         
