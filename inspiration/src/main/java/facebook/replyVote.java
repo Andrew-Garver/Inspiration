@@ -69,7 +69,8 @@ public class replyVote extends HttpServlet {
             referer="lds.org";
 
 
-        String voterID = "1";//request.getSession().getAttribute("user_id"); <--- IMPLEMENT ONLY WITH FUNCTIONAL LOGIN CODE/ADAPT AS NEEDED
+        //String voterID = "1";
+        String voterID = request.getSession().getAttribute("user_id").toString();
         String authorID = ""; // We look up this value
         String replyNumber= request.getParameter("replyID");
         String vote = request.getParameter("val");
