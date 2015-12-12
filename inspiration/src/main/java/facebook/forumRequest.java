@@ -179,6 +179,7 @@ public class forumRequest extends HttpServlet {
         String topic = "UNDEFINED";
         String pic = "UNDEFINED";
         String joinDate = "UNDEFINED";
+        String postDate = "UNDEFINED";
         
         Vector<Integer> responderIDs = new Vector<>();     
         Vector<Integer> replyIDs = new Vector<>();
@@ -212,7 +213,7 @@ public class forumRequest extends HttpServlet {
                 title = rs.getString("title");
                 topic = rs.getString("topic_name");
                 pic = rs.getString("pic");
-                joinDate = "temp fix"; //(rs.getDate("date_posted")).toString();
+                postDate = rs.getDate("date_posted").toString();
             }
             
             // Get the Reply information
@@ -252,7 +253,7 @@ public class forumRequest extends HttpServlet {
         }
         
         String replies = "<h2>No replies have been posted to this question</h2>";
-        String listingDetails = getLargeQuestion(author, pic, title, topic, joinDate, posterID, karma) + getNewBox();
+        String listingDetails = getLargeQuestion(author, pic, title, topic, postDate, posterID, karma) + getNewBox();
 
         if(!content.isEmpty()) {
             for(int i = 0; i < content.size(); i++) 
