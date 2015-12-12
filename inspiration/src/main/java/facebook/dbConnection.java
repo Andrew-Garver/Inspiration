@@ -29,8 +29,7 @@ public class dbConnection {
     public void setConnections() {
         String host = getenv("OPENSHIFT_MYSQL_DB_HOST");
         String port = getenv("OPENSHIFT_MYSQL_DB_PORT");
-//        this.setDB_URL("jdbc:mysql://" + host + ":" + port + "/jsp");
-        this.setDB_URL("jdbc:mysql://127.12.115.130:3306/jsp");
+        this.setDB_URL("jdbc:mysql://" + host + ":" + port + "/jsp");
         this.setUSER("adminLGMn6AW");
         this.setPASS("Lhh3jeWDXKe1");
     }     // */
