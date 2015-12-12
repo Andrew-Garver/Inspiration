@@ -14,7 +14,6 @@
     <body>
         <jsp:include page="/modules/header.jsp" />
         <div>
-            <div class="col-md-4"></div>
             <div class="col-md-6">
                 ${relatedPosts}
                 ${posts}
