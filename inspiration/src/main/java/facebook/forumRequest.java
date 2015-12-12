@@ -60,7 +60,7 @@ public class forumRequest extends HttpServlet {
                         "<h1>" +
                         question +
                         "</h1>" +
-                        "<h3><img src=" +
+                        "<h3><img class=\"user-post-photo\" src=" +
                         pic + 
                         " />\n" +
                         name +

@@ -154,6 +154,10 @@ div.panel {
     font-size: 32px;
 }
 
+.user-post-photo {
+    width:50px;
+}
+
 .submitError {
     color: red;
     text-decoration: underline;
