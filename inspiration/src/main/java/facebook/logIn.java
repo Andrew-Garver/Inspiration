@@ -105,7 +105,7 @@ public class logIn extends HttpServlet {
                 request.getSession().setAttribute("loggedIn", "true");
                 request.getSession().setAttribute("name", rs.getString("username"));
                 request.getSession().setAttribute("pic", rs.getString("pic"));
-                request.getSession().setAttribute("desc", rs.getString("desc"));
+                request.getSession().setAttribute("user_desc", rs.getString("user_desc"));
                 request.getSession().setAttribute("location", rs.getString("location"));
                 request.getSession().setAttribute("user_id", rs.getString("user_id"));
                 request.getSession().setAttribute("email", rs.getString("email"));
