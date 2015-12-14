@@ -260,8 +260,9 @@ public class forumRequest extends HttpServlet {
         String listingDetails = getLargeQuestion(author, pic, title, topic, postDate, posterID, karma, postContent) + getNewBox();
 
         if(!content.isEmpty()) {
+            replies ="";
             for(int i = 0; i < content.size(); i++) 
-                replies = getResponse(names.get(i), photoURLs.get(i), content.get(i), time.get(i), replyIDs.get(i), repliesKarma.get(i));       
+                replies += getResponse(names.get(i), photoURLs.get(i), content.get(i), time.get(i), replyIDs.get(i), repliesKarma.get(i));       
         }
             
         listingDetails += replies + getEndNewBox(getID) + "</div></div>";
