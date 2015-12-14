@@ -44,7 +44,7 @@ public class forumRequest extends HttpServlet {
         return header;
     }
 
-    protected String getLargeQuestion(String name, String pic, String question, String topic, String date, Integer postID, Integer karma) {
+    protected String getLargeQuestion(String name, String pic, String question, String topic, String date, Integer postID, Integer karma, String content) {
         String title =  "<table><td style=\"min-width:82px; max-width:82px\"> \n" +
                         "<a href=\"postVote?val=up&postID=" +
                         Integer.toString(postID) + 
@@ -69,7 +69,10 @@ public class forumRequest extends HttpServlet {
                         " <br/>Posted: " +
                         date +
                         "</h3>\n<br/>\n<br/>\n" +
-                        "</td>\n</table><br><br>";
+                        "</td>\n</table><br><br>" +
+                        "<div class='well post-question-content'>" +
+                        content +
+                        "</div>";
         return title;
     }
     
@@ -178,7 +181,7 @@ public class forumRequest extends HttpServlet {
         String title = "UNDEFINED";
         String topic = "UNDEFINED";
         String pic = "UNDEFINED";
-        String joinDate = "UNDEFINED";
+        String postContent = "UNDEFINED";
         String postDate = "UNDEFINED";
         
         Vector<Integer> responderIDs = new Vector<>();     
@@ -213,6 +216,7 @@ public class forumRequest extends HttpServlet {
                 title = rs.getString("title");
                 topic = rs.getString("topic_name");
                 pic = rs.getString("pic");
+                postContent = rs.getString("content");
                 postDate = rs.getDate("date_posted").toString();
             }
             
@@ -253,7 +257,7 @@ public class forumRequest extends HttpServlet {
         }
         
         String replies = "<h2>No replies have been posted to this question</h2>";
-        String listingDetails = getLargeQuestion(author, pic, title, topic, postDate, posterID, karma) + getNewBox();
+        String listingDetails = getLargeQuestion(author, pic, title, topic, postDate, posterID, karma, postContent) + getNewBox();
 
         if(!content.isEmpty()) {
             for(int i = 0; i < content.size(); i++) 

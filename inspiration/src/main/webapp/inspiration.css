@@ -233,3 +233,7 @@ div.panel {
     font-weight: bold;
     font-size: 11pt;
 }
+
+.post-question-content {
+    margin-left:80px;
+}
