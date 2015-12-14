@@ -21,13 +21,13 @@
                     <input class="form-control" type="text" style="max-width: 40%; float:left;" placeholder="Question title" name="question_title">
                     <select class="form-control" id="category" name="question_topic" style="max-width: 15%;">
                             <!-- This list should pull from the database. -->
-                            <option value="1">Mathematics</option>
-                            <option value="2">Literature</option>
-                            <option value="3">Economics</option>
-                            <option value="4">Homemaking</option>
-                            <option value="5">Computer Science</option>
-                            <option value="6">Web Design</option>
-                            <option value="7">Athletics</option>
+                            <option value="1">Computer Science</option>
+                            <option value="2">Web Design</option>
+                            <option value="3">Mathematics</option>
+                            <option value="4">Athletics</option>
+                            <option value="5">Economics</option>
+                            <option value="6">Homemaking</option>
+                            <option value="7">Literature</option>
                     </select>
                     <br/>
                     <textarea class="form-control" rows="5" name="question_content" id="question" placeholder="Question text goes here..."></textarea>
