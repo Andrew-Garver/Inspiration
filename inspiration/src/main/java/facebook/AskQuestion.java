@@ -5,6 +5,7 @@
  */
 package facebook;
 
+import java.sql.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -124,20 +125,31 @@ public class AskQuestion extends HttpServlet {
         out.println("userid: " + user_id + " post_id: " + post_id + " post-title: " + postTitle + " post-content: " + postContent + " post-type: " + postType + " post-parent-topic: " + postParentTopic);
         
 //        Connect to our database
-        sql = "INSERT INTO posts (user_id, post_id, title, content, type, topic_id) VALUES ("
-                + user_id + ", "
-                + post_id + ", "
-                + "'" + postTitle.replaceAll("'", "&#39;") + "'" + ", "
-                + "'" + postContent.replaceAll("'", "&#39;") + "'" + ", "
-                + "'" + postType + "'" + ", "
-                + postParentTopic + ")";
-        stmt = null;
+//        sql = "INSERT INTO posts (user_id, post_id, title, content, type, topic_id) VALUES ("
+//                + user_id + ", "
+//                + post_id + ", "
+//                + "'" + postTitle.replaceAll("'", "&#39;") + "'" + ", "
+//                + "'" + postContent.replaceAll("'", "&#39;") + "'" + ", "
+//                + "'" + postType + "'" + ", "
+//                + postParentTopic + ")";
+        
+        PreparedStatement pst = null;
         conn = null;
+        
         try {
             Class.forName(db.getJDBC_DRIVER());
             conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
-            stmt = conn.createStatement();
-            stmt.executeUpdate(sql);
+//            stmt = conn.createStatement();
+            sql = "INSERT INTO posts (user_id, post_id, title, content, type, topic_id) VALUES (?, ?, ?, ?, ?, ?)";
+            pst = conn.prepareStatement(sql);
+        
+            pst.setString(1, user_id);
+            pst.setString(2, post_id);
+            pst.setString(3, "'" + postTitle.replaceAll("'", "&#39;") + "'");
+            pst.setString(4, "'" + postContent.replaceAll("'", "&#39;") + "'");
+            pst.setString(5, "'" + postType + "'");
+            pst.setString(6, postParentTopic);
+            pst.executeUpdate();
         } catch(SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
