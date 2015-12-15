@@ -142,7 +142,7 @@ public class CallBack extends HttpServlet {
             e.printStackTrace();
         }
         
-        response.sendRedirect("homepage.jsp");
+        response.sendRedirect("ShowFriends");
 
         //processRequest(request, response);
     }
