@@ -145,10 +145,11 @@ public class AskQuestion extends HttpServlet {
         
             pst.setString(1, user_id);
             pst.setString(2, post_id);
-            pst.setString(3, "'" + postTitle.replaceAll("'", "&#39;") + "'");
-            pst.setString(4, "'" + postContent.replaceAll("'", "&#39;") + "'");
-            pst.setString(5, "'" + postType + "'");
+            pst.setString(3, postTitle.replaceAll("'","&#39;"));
+            pst.setString(4, postContent.replaceAll("'","&#39;"));
+            pst.setString(5, postType);
             pst.setString(6, postParentTopic);
+            
             pst.executeUpdate();
         } catch(SQLException se) {
             //Handle errors for JDBC
