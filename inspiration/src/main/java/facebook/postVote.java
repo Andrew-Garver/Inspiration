@@ -68,7 +68,7 @@ public class postVote extends HttpServlet {
             referer="lds.org";
 
 
-        String voterID = "1";//USER_ID NEEDS TO BE defined
+        String voterID = request.getSession().getAttribute("user_id").toString();
         String authorID = "";  
         String postNumber= request.getParameter("postID");
         String vote = request.getParameter("val");
