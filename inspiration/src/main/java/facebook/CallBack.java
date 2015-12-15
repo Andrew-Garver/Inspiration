@@ -102,8 +102,8 @@ public class CallBack extends HttpServlet {
             request.getSession().setAttribute("personal_site", facebook.getMe().getWebsite());
             URL website = facebook.getMe().getWebsite();
 
-            String sql = "INSERT INTO users(name, user_desc, pic, birth_date, location, personal_site, join_date) "
-                    + "VALUES('" + name + "','" + desc + "','" + pic + "','" + birthday + "','" + loc + "','"
+            String sql = "INSERT INTO users(username, name, user_desc, pic, birth_date, location, personal_site, join_date) "
+                    + "VALUES('" + name + "','" + name + "','" + desc + "','" + pic + "','" + birthday + "','" + loc + "','"
                     + website + "','" + new Date() + "')";
 
             String checkIfUserExists = "SELECT * FROM users WHERE name = '" + facebook.getName() + "' AND pic = '" + facebook.getPictureURL(PictureSize.large) + "'";
