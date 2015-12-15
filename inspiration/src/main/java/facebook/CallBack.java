@@ -102,7 +102,7 @@ public class CallBack extends HttpServlet {
             request.getSession().setAttribute("personal_site", facebook.getMe().getWebsite());
             URL website = facebook.getMe().getWebsite();
             
-            String sql = "INSERT INTO users(name, desc, pic, birth_date, location, personal_site, join_date) "
+            String sql = "INSERT INTO users(name, user_desc, pic, birth_date, location, personal_site, join_date) "
                 + "VALUES('" + name + "','" + desc + "','" + pic + "','" + birthday + "','" + loc + "','"
                 + website + "','" + new Date() + "')";
         
@@ -142,7 +142,7 @@ public class CallBack extends HttpServlet {
             e.printStackTrace();
         }
         
-        response.sendRedirect("ShowFriends");
+        response.sendRedirect("homepage.jsp");
 
         //processRequest(request, response);
     }
