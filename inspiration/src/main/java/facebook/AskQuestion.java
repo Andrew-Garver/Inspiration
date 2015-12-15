@@ -127,8 +127,8 @@ public class AskQuestion extends HttpServlet {
         sql = "INSERT INTO posts (user_id, post_id, title, content, type, topic_id) VALUES ("
                 + user_id + ", "
                 + post_id + ", "
-                + "'" + postTitle + "'" + ", "
-                + "'" + postContent + "'" + ", "
+                + "'" + postTitle.replace("'", "&#39;") + "'" + ", "
+                + "'" + postContent.replace("'", "&#39;") + "'" + ", "
                 + "'" + postType + "'" + ", "
                 + postParentTopic + ")";
         stmt = null;
