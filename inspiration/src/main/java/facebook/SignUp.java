@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -81,15 +82,15 @@ public class SignUp extends HttpServlet {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String website = "http://gothamist.com/2015/09/21/youd_be_surprised_why_you_need_a_pe.php";
-        if(request.getParameter("website") != "") {
+        if(!request.getParameter("website").equals("")) {
             website = request.getParameter("website");
         }
         String linkedin = "https://www.linkedin.com/";
-        if(request.getParameter("linkedin") != "") {
+        if(!request.getParameter("linkedin").equals("")) {
             linkedin = request.getParameter("linkedin");
         }
         String picurl = "http://www.visimpact.net/wp-content/uploads/2014/11/no_user_icon.gif";
-        if(request.getParameter("picurl") != "") {
+        if(!request.getParameter("picurl").equals("")) {
             picurl = request.getParameter("picurl");
         }
         String username = request.getParameter("username");
@@ -100,7 +101,7 @@ public class SignUp extends HttpServlet {
         
         String checkIfUserExists = "SELECT * FROM users WHERE email = '" + email + "' OR username = '" + username + "'";
         String insertUserIntoTable = "INSERT INTO users (username,email,password,name,user_desc,pic,birth_date,location,linked_in,personal_site)"
-                + " VALUES ('"+username+"','"+email+"','"+password+"','"+name+"','"+description+"','"+picurl+"','"+birthday+"','"+location+"','"+linkedin+"','"+website+"')";
+                + " VALUES ('" + username + "','" + email + "','" + password + "','"+name+"','" + description.replaceAll("'", "&#39;") + "','" + picurl + "','" + birthday + "','" + location + "','" + linkedin + "','" + website + "')";
         String getUserId = "SELECT user_id FROM users WHERE username = '" + username + "'";
         
         dbConnection db = new dbConnection();
@@ -147,12 +148,11 @@ public class SignUp extends HttpServlet {
         }//end try
 
         // add any other info we might need here
-        request.getSession().setAttribute("name", username);
-        request.getSession().setAttribute("pic", picurl);
-        request.getSession().setAttribute("loc", location);
-        request.getSession().setAttribute("user_id", getUserId);
-        request.getSession().setAttribute("loggedIn", "true");
-        response.sendRedirect("homepage.jsp");
+        request.getSession().setAttribute("username", username);
+        request.getSession().setAttribute("password", password);
+        // calls the logIn servlet to handle logIn procedures using the username and password just created
+        RequestDispatcher rd = request.getRequestDispatcher("logIn");
+        rd.forward(request, response);
         
 //        processRequest(request, response);
     }
