@@ -94,7 +94,7 @@ public class CallBack extends HttpServlet {
             String birthday = facebook.getMe().getBirthday();
             request.getSession().setAttribute("user_desc", facebook.getMe().getBio());
             String desc = facebook.getMe().getBio();
-            facebook.getMe().getEmail();
+            request.getSession().setAttribute("email", facebook.getMe().getEmail());
             request.getSession().setAttribute("loc", facebook.getMe().getHometown());
             IdNameEntity loc = facebook.getMe().getHometown();
             request.getSession().setAttribute("education", facebook.getMe().getEducation());
