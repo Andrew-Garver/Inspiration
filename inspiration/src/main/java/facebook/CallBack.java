@@ -94,6 +94,7 @@ public class CallBack extends HttpServlet {
             String birthday = facebook.getMe().getBirthday();
             request.getSession().setAttribute("user_desc", facebook.getMe().getBio());
             String desc = facebook.getMe().getBio();
+            facebook.getMe().getEmail();
             request.getSession().setAttribute("loc", facebook.getMe().getHometown());
             IdNameEntity loc = facebook.getMe().getHometown();
             request.getSession().setAttribute("education", facebook.getMe().getEducation());
@@ -102,12 +103,12 @@ public class CallBack extends HttpServlet {
             request.getSession().setAttribute("personal_site", facebook.getMe().getWebsite());
             URL website = facebook.getMe().getWebsite();
 
-            String sql = "INSERT INTO users(username, name, user_desc, pic, birth_date, location, personal_site, join_date) "
-                    + "VALUES('" + name + "','" + name + "','" + desc + "','" + pic + "','" + birthday + "','" + loc + "','"
+            String sql = "INSERT INTO users(username, name, email, user_desc, pic, birth_date, location, personal_site, join_date) "
+                    + "VALUES('" + name + "','" + name + "','" + facebook.getMe().getEmail() + "','" + desc + "','" + pic + "','" + birthday + "','" + loc + "','"
                     + website + "','" + new Date() + "')";
 
             String checkIfUserExists = "SELECT * FROM users WHERE name = '" + facebook.getName() + "' AND pic = '" + facebook.getPictureURL(PictureSize.large) + "'";
-
+ 
             dbConnection db = new dbConnection();
             db.setConnections();
             Statement stmt = null;
