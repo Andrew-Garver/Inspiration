@@ -12,7 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import facebook4j.Facebook; 
+import facebook4j.Facebook;
 import facebook4j.FacebookException;
 import facebook4j.IdNameEntity;
 import facebook4j.PictureSize;
@@ -70,7 +70,7 @@ public class CallBack extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession(true);
         request.getSession().setAttribute("loggedIn", true);
 
@@ -83,7 +83,7 @@ public class CallBack extends HttpServlet {
         } catch (FacebookException e) {
             e.printStackTrace();
         }
-        
+
         try {
             request.getSession().setAttribute("name", facebook.getName());
             String name = facebook.getName();
@@ -101,21 +101,31 @@ public class CallBack extends HttpServlet {
             request.getSession().setAttribute("work", facebook.getMe().getWork());
             request.getSession().setAttribute("personal_site", facebook.getMe().getWebsite());
             URL website = facebook.getMe().getWebsite();
-            
+
             String sql = "INSERT INTO users(name, user_desc, pic, birth_date, location, personal_site, join_date) "
-                + "VALUES('" + name + "','" + desc + "','" + pic + "','" + birthday + "','" + loc + "','"
-                + website + "','" + new Date() + "')";
-        
+                    + "VALUES('" + name + "','" + desc + "','" + pic + "','" + birthday + "','" + loc + "','"
+                    + website + "','" + new Date() + "')";
+
+            String checkIfUserExists = "SELECT * FROM users WHERE name = '" + facebook.getName() + "' AND pic = '" + facebook.getPictureURL(PictureSize.large) + "'";
+
             dbConnection db = new dbConnection();
             db.setConnections();
             Statement stmt = null;
             Connection conn = null;
+            ResultSet rs;
             try {
                 Class.forName(db.getJDBC_DRIVER());
                 conn = DriverManager.getConnection(db.getDB_URL(), db.getUSER(), db.getPASS());
                 stmt = conn.createStatement();
-                stmt.executeQuery(sql);
-            } catch(SQLException se) {
+                rs = stmt.executeQuery(checkIfUserExists);
+            if (rs.next()) { // if the user already exists, handle it
+                request.getSession().setAttribute("dupeAcct", "That username or email has already been registered");
+                response.sendRedirect("signUp.jsp");
+            } else { // input the user to the db
+                stmt = conn.createStatement();
+                stmt.executeUpdate(sql);
+            }
+            } catch (SQLException se) {
                 //Handle errors for JDBC
                 se.printStackTrace();
             } catch (Exception se) {
@@ -124,24 +134,26 @@ public class CallBack extends HttpServlet {
             } finally {
                 //finally block used to close resources
                 try {
-                    if(stmt != null)
+                    if (stmt != null) {
                         stmt.close();
-                } catch(SQLException se2) {
+                    }
+                } catch (SQLException se2) {
                 }// nothing we can do
                 try {
-                    if(conn != null)
+                    if (conn != null) {
                         conn.close();
-                } catch(SQLException se) {
+                    }
+                } catch (SQLException se) {
                     se.printStackTrace();
                 }//end finally try
             }//end try
-            
+
         } catch (IllegalStateException e) {
             e.printStackTrace();
         } catch (FacebookException e) {
             e.printStackTrace();
         }
-        
+
         response.sendRedirect("homepage.jsp");
 
         //processRequest(request, response);
